@@ -29,7 +29,9 @@ class _DataAssetPageState extends State<DataAssetPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CryptoVisorPillButton(
-            onTap: () => context.pop(),
+            onTap: () {
+              if (context.canPop()) context.pop();
+            },
             text: "voltar",
           ),
           Text(widget.ticker)

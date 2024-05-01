@@ -24,10 +24,7 @@ class _ListAssetPageState extends State<ListAssetPage> {
           backgroundColor: Colors.green,
           body: Center(
               child: CryptoVisorPillButton(
-            onTap: () {
-              _bloc.goToDataAsset(context);
-              // context.pop();
-            },
+            onTap: () => _bloc.goToDataAsset(context),
             text: "teste",
           ))),
     );
