@@ -37,7 +37,7 @@ class ScienceDexTextField extends StatefulWidget {
 
 class _ScienceDexTextFieldState extends State<ScienceDexTextField> {
   TextStyle get _labelTextStyle =>
-      const Text("").bodySmallMedium(style: const TextStyle(color: CryptoVisorColors.label)).style!;
+      const Text("").bodySmallMedium(style: const TextStyle(color: Colors.black)).style!;
 
   TextStyle get _defaultTextStyle => const Text("").bodySmallMedium().style!;
 
@@ -46,7 +46,7 @@ class _ScienceDexTextFieldState extends State<ScienceDexTextField> {
 
   OutlineInputBorder get _defaultFocusedBorder {
     return OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: CryptoVisorColors.gray, width: 1));
+        borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: Colors.black, width: 1));
   }
 
   @override
@@ -70,12 +70,12 @@ class _ScienceDexTextFieldState extends State<ScienceDexTextField> {
             onChanged: widget.onChanged,
             maxLines: widget.maxLines,
             keyboardType: widget.textInputType,
-            cursorColor: CryptoVisorColors.secondaryColor,
+            cursorColor: CryptoVisorColors.scaffoldColor,
             decoration: InputDecoration(
                 filled: true,
                 isCollapsed: false,
                 constraints: const BoxConstraints.expand(height: 39),
-                fillColor: CryptoVisorColors.grayLight,
+                fillColor: Colors.black,
                 enabledBorder: _border,
                 labelText: widget.labelText,
                 floatingLabelBehavior: FloatingLabelBehavior.never,

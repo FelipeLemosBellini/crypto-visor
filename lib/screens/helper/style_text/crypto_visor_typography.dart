@@ -402,7 +402,7 @@ extension TypographyExtension on Text {
     return TextStyle(
             fontSize: fontSize,
             fontStyle: FontStyle.normal,
-            color: CryptoVisorColors.black,
+            color: CryptoVisorColors.whiteLabel,
             fontFamily: 'Inter',
             fontWeight: fontWeight)
         .merge(mergeStyle);

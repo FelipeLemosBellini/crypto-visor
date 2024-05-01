@@ -2,16 +2,9 @@ import 'package:flutter/material.dart';
 
 abstract class CryptoVisorColors {
   static const Color red = Color(0xFFFF0000);
-  static const Color secondaryColor = Color(0xFF0F278B);
-  static const Color scaffoldBackground = Color(0xFFFFFFFF);
-  static const Color grayLight = Color(0xFFF5F6FA);
-  static const Color grayBorder = Color(0xFFE9E9E9);
-  static const Color grayExtraLight = Color(0xFFF0F0F0);
-  static const Color gray = Color(0xFFD3D3D3);
-  static const Color grayBackground = Color(0xFFF5F6FA);
-  static const Color grayIcon = Color(0xFFDCDCDD);
-  static const Color label = Color(0xFFD9D9D9);
-  static const Color black = Colors.black;
-  static const Color dateBlack = Color(0xFF3D3D3D);
+  static const Color scaffoldColor = Color(0xFF161B22);
+  static const Color secondaryColor = Color(0xFF0D1117);
   static const Color white = Colors.white;
+  static const Color whiteLabel = Color(0xFFE6EDF3);
+  static const Color black = Colors.black;
 }

@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Inter',
           useMaterial3: false,
           textSelectionTheme: const TextSelectionThemeData(
-            selectionHandleColor: CryptoVisorColors.secondaryColor,
-            cursorColor: CryptoVisorColors.secondaryColor,
+            selectionHandleColor: CryptoVisorColors.scaffoldColor,
+            cursorColor: CryptoVisorColors.scaffoldColor,
           )),
       debugShowCheckedModeBanner: false,
       routerConfig: RouteGenerate.router,

@@ -1,3 +1,4 @@
+import 'package:cryptovisor/screens/helper/crypto_visor_colors.dart';
 import 'package:cryptovisor/screens/structure/home/list_asset/list_asset_bloc.dart';
 import 'package:cryptovisor/screens/structure/home/list_asset/list_asset_state.dart';
 import 'package:cryptovisor/screens/widgets/export_crypto_visor_material.dart';
@@ -21,7 +22,7 @@ class _ListAssetPageState extends State<ListAssetPage> {
     return BlocBuilder<ListAssetBloc, ListAssetState>(
       bloc: _bloc,
       builder: (_, state) => Scaffold(
-          backgroundColor: Colors.green,
+          backgroundColor: CryptoVisorColors.scaffoldColor,
           body: Center(
               child: CryptoVisorPillButton(
             onTap: () => _bloc.goToDataAsset(context),

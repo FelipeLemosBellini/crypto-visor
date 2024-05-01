@@ -8,7 +8,7 @@ abstract class ScienceDexDateHelper {
     return await showDatePicker(
         context: context,
         initialDate: today,
-        barrierColor: CryptoVisorColors.black.withOpacity(0.25),
+        barrierColor: Colors.black.withOpacity(0.25),
         firstDate: today,
         lastDate: DateTime(2100, 1, 1));
   }

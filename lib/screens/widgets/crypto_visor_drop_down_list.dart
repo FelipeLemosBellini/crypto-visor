@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cryptovisor/screens/helper/export_helper_screen.dart';
 
-class ScienceDexDropDownList extends StatelessWidget {
+class CryptoVisorDropDownList extends StatelessWidget {
   final List<String>? values;
   final String selectedValue;
   final String defaultValue;
   final ValueChanged<String?>? onChange;
   final bool isOnlyRead;
 
-  const ScienceDexDropDownList({
+  const CryptoVisorDropDownList({
     super.key,
     this.values,
     required this.selectedValue,
@@ -23,7 +23,6 @@ class ScienceDexDropDownList extends StatelessWidget {
     return _hasValue ? firstValue : selectedValue;
   }
 
-  Color get _borderColor => isOnlyRead ? CryptoVisorColors.white : CryptoVisorColors.grayBorder;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class ScienceDexDropDownList extends StatelessWidget {
         decoration: BoxDecoration(
             color: CryptoVisorColors.white,
             borderRadius: const BorderRadius.all(Radius.circular(7)),
-            border: Border.all(color: _borderColor)),
+            border: Border.all(color: CryptoVisorColors.white)),
         child: Visibility(
             visible: isOnlyRead,
             replacement: DropdownButton<String>(
@@ -47,7 +46,7 @@ class ScienceDexDropDownList extends StatelessWidget {
                 iconSize: 20,
                 elevation: 1,
                 enableFeedback: true,
-                icon: const Icon(Icons.keyboard_arrow_down_outlined, color: CryptoVisorColors.gray),
+                icon: const Icon(Icons.keyboard_arrow_down_outlined, color: CryptoVisorColors.white),
                 items: values
                     ?.map<DropdownMenuItem<String>>((String value) => DropdownMenuItem(
                         value: value,

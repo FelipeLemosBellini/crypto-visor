@@ -1,4 +1,5 @@
 import 'package:cryptovisor/routes/route_names.dart';
+import 'package:cryptovisor/screens/helper/crypto_visor_colors.dart';
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_bloc.dart';
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_state.dart';
 import 'package:cryptovisor/screens/widgets/export_crypto_visor_material.dart';
@@ -21,7 +22,6 @@ class _DataAssetPageState extends State<DataAssetPage> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -30,19 +30,15 @@ class _DataAssetPageState extends State<DataAssetPage> {
     return BlocBuilder<DataAssetBloc, DataAssetState>(
       bloc: _bloc,
       builder: (_, state) => Scaffold(
+          backgroundColor: CryptoVisorColors.scaffoldColor,
+          appBar: CryptoVisorAppBar(textTitle: widget.ticker, onTap: () => context.pop()),
           body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CryptoVisorPillButton(
-            onTap: () {
-              if (context.canPop()) context.pop();
-            },
-            text: "voltar",
-          ),
-          Text(widget.ticker)
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+            ],
+          )),
     );
   }
 }

@@ -37,18 +37,18 @@ class ScienceDexSimpleTextField extends StatefulWidget {
 
 class _ScienceDexSimpleTextFieldState extends State<ScienceDexSimpleTextField> {
   TextStyle get _labelTextStyle =>
-      const Text("").bodySmallMedium(style: const TextStyle(color: CryptoVisorColors.label)).style!;
+      const Text("").bodySmallMedium(style: const TextStyle(color: Colors.black)).style!;
 
   TextStyle get _defaultTextStyle => const Text("").bodyBaseMedium().style!;
 
   Color get _backgroundColor => widget.focusNode.hasFocus ? CryptoVisorColors.white : CryptoVisorColors.white;
 
   OutlineInputBorder get _border => OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: CryptoVisorColors.label, width: 2));
+      borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: Colors.black, width: 2));
 
   OutlineInputBorder get _defaultFocusedBorder {
     return OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: CryptoVisorColors.gray, width: 3));
+        borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: Colors.black, width: 3));
   }
 
   @override
@@ -73,7 +73,7 @@ class _ScienceDexSimpleTextFieldState extends State<ScienceDexSimpleTextField> {
           onChanged: widget.onChanged,
           maxLines: widget.maxLines,
           keyboardType: widget.textInputType,
-          cursorColor: CryptoVisorColors.secondaryColor,
+          cursorColor: CryptoVisorColors.scaffoldColor,
           decoration: InputDecoration(
               filled: true,
               isCollapsed: false,

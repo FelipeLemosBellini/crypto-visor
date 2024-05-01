@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ScienceDexGestureDetector extends StatelessWidget {
+class CryptoVisorGestureDetector extends StatelessWidget {
   final Widget child;
   final Function() onTap;
-  const ScienceDexGestureDetector({super.key, required this.child, required this.onTap});
+  const CryptoVisorGestureDetector({super.key, required this.child, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

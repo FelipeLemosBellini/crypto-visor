@@ -1,26 +1,32 @@
+import 'package:cryptovisor/screens/widgets/export_crypto_visor_material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cryptovisor/screens/helper/export_helper_screen.dart';
 
-class ScienceDexAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CryptoVisorAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String textTitle;
+  final Function() onTap;
 
-  ScienceDexAppBar({required this.textTitle}) : super();
+  const CryptoVisorAppBar({super.key, required this.textTitle, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     double heightTop = MediaQuery.paddingOf(context).top;
     return Container(
         height: 54 + heightTop,
-        color: CryptoVisorColors.scaffoldBackground,
+        color: CryptoVisorColors.secondaryColor,
         padding: const EdgeInsets.only(left: 18),
-        child: Column(children: [
-          const Spacer(),
-          Row(children: [
-            SvgPicture.asset(ScienceDexVector.arrow_back.svg, height: 45),
-            Text(textTitle).bodyLargeSemiBold(style: const TextStyle(fontSize: 24)),
-          ])
-        ]));
+        child: Padding(
+            padding: EdgeInsets.only(top: heightTop),
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Row(children: [
+                CryptoVisorGestureDetector(
+                    onTap: onTap, child: const Icon(Icons.arrow_back, color: CryptoVisorColors.whiteLabel)),
+                // SvgPicture.asset(ScienceDexVector.arrow_back.svg, height: 45),
+                const SizedBox(width: 12),
+                Text(textTitle).bodyLargeSemiBold(style: const TextStyle(fontSize: 20))
+              ])
+            ])));
   }
 
   @override

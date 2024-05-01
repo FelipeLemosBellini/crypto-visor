@@ -29,7 +29,7 @@ class CryptoVisorPrimaryButton extends StatelessWidget {
             enableFeedback: true,
             onPressed: onTap,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            color: CryptoVisorColors.secondaryColor,
+            color: CryptoVisorColors.scaffoldColor,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 8),
               child: Text(text).bodySmallMedium(style: const TextStyle(color: CryptoVisorColors.white)),
