@@ -2,14 +2,14 @@ import 'package:cryptovisor/screens/helper/export_helper_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ScienceDexPillButton extends StatelessWidget {
+class CryptoVisorPillButton extends StatelessWidget {
   final Function() onTap;
   final String text;
   final EdgeInsets? padding;
   final Alignment? alignment;
   final Color? backgroundColor;
 
-  const ScienceDexPillButton({
+  const CryptoVisorPillButton({
     super.key,
     required this.onTap,
     required this.text,

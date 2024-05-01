@@ -12,11 +12,12 @@ abstract class RouteGenerate {
         pageBuilder: (context, state) => const MaterialPage(fullscreenDialog: true, child: ListAssetPage())),
     GoRoute(
         name: RouteNames.dataAssetPage,
-        path: "/${RouteNames.dataAssetPage}",
-        pageBuilder: (context, state) => const CustomTransitionPage(
-            transitionDuration: Duration(milliseconds: 600),
+        path: "${RouteNames.dataAssetPage}/:ticker",
+        pageBuilder: (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 600),
             transitionsBuilder: AnimationTransitions.rightToLeft,
-            child: DataAssetPage())),
+            child: DataAssetPage(ticker: state.pathParameters["ticker"] ?? ""))),
   ]);
 }
 // quando passa no pathParameters null ele quebra

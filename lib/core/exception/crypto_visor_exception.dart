@@ -1,5 +1,5 @@
-class ScienceDexException{
+class CryptoExceptionException{
   final String error;
-  ScienceDexException({required this.error});
+  CryptoExceptionException({required this.error});
 
 }

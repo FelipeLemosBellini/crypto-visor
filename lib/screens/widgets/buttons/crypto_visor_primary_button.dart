@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cryptovisor/screens/helper/export_helper_screen.dart';
 
-class ScienceDexPrimaryButton extends StatelessWidget {
+class CryptoVisorPrimaryButton extends StatelessWidget {
   final Function() onTap;
   final String text;
   final EdgeInsets? padding;
   final Alignment? alignment;
 
-  const ScienceDexPrimaryButton({
+  const CryptoVisorPrimaryButton({
     super.key,
     required this.onTap,
     required this.text,
