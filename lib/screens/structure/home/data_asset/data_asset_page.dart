@@ -20,6 +20,12 @@ class _DataAssetPageState extends State<DataAssetPage> {
   final DataAssetBloc _bloc = GetIt.I.get<DataAssetBloc>();
 
   @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<DataAssetBloc, DataAssetState>(
       bloc: _bloc,

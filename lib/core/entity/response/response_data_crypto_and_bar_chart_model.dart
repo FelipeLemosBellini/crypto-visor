@@ -37,17 +37,15 @@ class ResponseDataCryptoAndBarChartModel {
     List<ExponentialMovingAverageOfDays> listEmaModel30Days = [];
     List<BollingerBandsModel> listBollingerModel = [];
 
-    map['relativeStrengthIndex']
-        .forEach((element) => rsiModel.add(RelativeStrengthIndexModel.fromMap(element)))
-        .toList();
+    map['relativeStrengthIndex'].map((element) => rsiModel.add(RelativeStrengthIndexModel.fromMap(element))).toList();
     map['exponentialMovingAverageOf8days']
-        .forEach((element) => listEmaModel8Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
+        .map((element) => listEmaModel8Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
         .toList();
     map['exponentialMovingAverageOf14days']
-        .forEach((element) => listEmaModel14Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
+        .map((element) => listEmaModel14Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
         .toList();
     map['exponentialMovingAverageOf30days']
-        .forEach((element) => listEmaModel30Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
+        .map((element) => listEmaModel30Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
         .toList();
     map['bollingerBands'].map((element) => listBollingerModel.add(BollingerBandsModel.fromMap(element))).toList();
 
