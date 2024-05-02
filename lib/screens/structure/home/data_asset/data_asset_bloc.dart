@@ -1,3 +1,4 @@
+import 'package:cryptovisor/core/entity/response/response_data_crypto_and_bar_chart_model.dart';
 import 'package:cryptovisor/core/repositories/data_crypto/data_crypto_repository.dart';
 import 'package:cryptovisor/core/repositories/data_crypto/interfaces/data_crypto_interface.dart';
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_state.dart';
@@ -13,9 +14,8 @@ class DataAssetBloc extends Cubit<DataAssetState> {
 
   void _initPage() async {
     var response = await _dataCryptoRepository.getDataAndCharts(ticker: "BTC");
-    response.fold((error) => print(error), (r) {
-      print(r.lastCloseValue);
-      print(r.bollingerBands.first.date);
+    response.fold((error) => print(error), (ResponseDataCryptoAndBarChartModel success) {
+      // state.averageEight = success.exponentialMovingAverageOf8days;
     });
   }
 }
