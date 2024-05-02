@@ -33,11 +33,12 @@ class _DataAssetPageState extends State<DataAssetPage> {
         builder: (_, state) => Scaffold(
             backgroundColor: CryptoVisorColors.scaffoldColor,
             appBar: CryptoVisorAppBar(textTitle: widget.ticker, onTap: () => context.pop()),
-            body: Column(children: [
-              SizedBox(
+            body: Padding(
+              padding: const EdgeInsets.only(left: 8, right: 4),
+              child: SizedBox(
                   height: 250,
                   width: MediaQuery.sizeOf(context).width,
-                  child: CustomPaint(child: CustomPaint(painter: RSIChartPainter(averages: state.rsi))))
-            ])));
+                  child: CustomPaint(child: CustomPaint(painter: RSIChartPainter(averages: state.rsi)))),
+            )));
   }
 }
