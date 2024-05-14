@@ -18,11 +18,18 @@ class DataAssetPage extends StatefulWidget {
   State<DataAssetPage> createState() => _DataAssetPageState();
 }
 
-class _DataAssetPageState extends State<DataAssetPage> {
+class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateMixin {
   final DataAssetBloc _bloc = GetIt.I.get<DataAssetBloc>();
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
   @override
   void initState() {
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    // _animation = CurvedAnimation(parent: _animationController, curve: Curves.fastOutSlowIn);
+    _animation = Tween<double>(begin: 1.0, end: 2.0).animate(_animationController);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _animationController.forward(from: 0));
     super.initState();
   }
 
@@ -34,11 +41,31 @@ class _DataAssetPageState extends State<DataAssetPage> {
             backgroundColor: CryptoVisorColors.scaffoldColor,
             appBar: CryptoVisorAppBar(textTitle: widget.ticker, onTap: () => context.pop()),
             body: Padding(
-              padding: const EdgeInsets.only(left: 8, right: 4),
-              child: SizedBox(
-                  height: 250,
-                  width: MediaQuery.sizeOf(context).width,
-                  child: CustomPaint(child: CustomPaint(painter: RSIChartPainter(averages: state.rsi)))),
-            )));
+                padding: const EdgeInsets.only(left: 8, right: 4),
+                child: TweenAnimationBuilder(
+                    tween: Tween<double>(begin: 0, end: 100),
+                    duration: const Duration(seconds: 10),
+                    builder: (BuildContext context, double percentage, Widget? widget) {
+                      return SizedBox(
+                          height: 250,
+                          width: MediaQuery.sizeOf(context).width,
+                          child: CustomPaint(
+                              painter: RSIChartPainter(
+                            // percentage: percentage,
+                            // animation: _animation,
+                            averages: state.rsi,
+                          )));
+                      // return CustomPaint(painter: Teste(percentage: percentage));
+                    })
+                // SizedBox(
+                // height: 250,
+                // width: MediaQuery.sizeOf(context).width,
+                // child: CustomPaint(
+                //     painter: RSIChartPainter(
+                //   averages: state.rsi,
+                //   animation: _animation,
+                // )))
+
+                )));
   }
 }
