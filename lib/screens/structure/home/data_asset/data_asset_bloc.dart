@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cryptovisor/core/entity/candle_data_entity.dart';
 import 'package:cryptovisor/core/entity/crypto_data/relative_strength_index_model.dart';
 import 'package:cryptovisor/core/entity/response/response_data_crypto_and_bar_chart_model.dart';
 import 'package:cryptovisor/core/repositories/data_crypto/data_crypto_repository.dart';
@@ -24,5 +27,16 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     // response.fold((error) => print(error), (ResponseDataCryptoAndBarChartModel success) {
     // state.averageEight = success.exponentialMovingAverageOf8days;
     // });
+    List<CandleDataEntity> candles = [];
+    for (int i = 0; i < 10; i++) {
+      Random random = Random.secure();
+      double open = random.nextDouble() * 90 + 10;
+      double high = open + random.nextDouble() * 10;
+      double low = open - random.nextDouble() * 10;
+      double close = (high + low) / 2;
+
+      candles.add(CandleDataEntity(close: close, high: high, low: low, open: open, timestamp: DateTime.now()));
+    }
+    state.copyWith(candles: candles);
   }
 }

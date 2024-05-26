@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class CandleDataEntity {
   final double open;
   final double high;
@@ -14,6 +16,8 @@ class CandleDataEntity {
   });
 
   bool get isGain => close >= open;
+
+  Color get colorCandle => isGain ? Colors.green : Colors.redAccent;
 
   factory CandleDataEntity.fromMap(Map<String, dynamic> map) {
     return CandleDataEntity(

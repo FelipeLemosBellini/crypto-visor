@@ -2,6 +2,7 @@ import 'package:cryptovisor/routes/route_names.dart';
 import 'package:cryptovisor/screens/helper/crypto_visor_colors.dart';
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_bloc.dart';
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_state.dart';
+import 'package:cryptovisor/screens/widgets/charts/candlestick/candlestick_chart_painter.dart';
 import 'package:cryptovisor/screens/widgets/charts/rsi/line_chart_painter.dart';
 import 'package:cryptovisor/screens/widgets/export_crypto_visor_material.dart';
 import 'package:flutter/material.dart';
@@ -40,34 +41,34 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
         builder: (_, state) => Scaffold(
             backgroundColor: CryptoVisorColors.scaffoldColor,
             appBar: CryptoVisorAppBar(textTitle: widget.ticker, onTap: () => context.pop()),
-            body: Column(
-              children: [
-                Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 4),
-                    child: TweenAnimationBuilder(
-                        tween: Tween<double>(begin: 0, end: 100),
-                        duration: const Duration(seconds: 10),
-                        builder: (BuildContext context, double percentage, Widget? widget) {
-                          return SizedBox(
-                              height: 250,
-                              width: MediaQuery.sizeOf(context).width,
-                              child: CustomPaint(
-                                  painter: RSIChartPainter(
-                                // percentage: percentage,
-                                // animation: _animation,
-                                averages: state.rsi,
-                              )));
-                        })),
-                TweenAnimationBuilder(
-                    tween: Tween<double>(begin: 0, end: 100),
-                    duration: const Duration(seconds: 10),
-                    builder: (BuildContext context, double percentage, Widget? widget) {
-                      return SizedBox(
-                        height: 250,
-                        width: MediaQuery.sizeOf(context).width,
-                      );
-                    })
-              ],
-            )));
+            body: Column(children: [
+              Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 4),
+                  child: TweenAnimationBuilder(
+                      tween: Tween<double>(begin: 0, end: 100),
+                      duration: const Duration(seconds: 10),
+                      builder: (BuildContext context, double percentage, Widget? widget) {
+                        return SizedBox(
+                            height: 250,
+                            width: MediaQuery.sizeOf(context).width,
+                            child: CustomPaint(
+                                painter: RSIChartPainter(
+                              // percentage: percentage,
+                              // animation: _animation,
+                              averages: state.rsi,
+                            )));
+                      })),
+              Padding(
+                  padding: const EdgeInsets.only(top: 10,left: 8, right: 4),
+                  child: TweenAnimationBuilder(
+                      tween: Tween<double>(begin: 0, end: 100),
+                      duration: const Duration(seconds: 10),
+                      builder: (BuildContext context, double percentage, Widget? widget) {
+                        return SizedBox(
+                            height: 250,
+                            width: MediaQuery.sizeOf(context).width,
+                            child: CustomPaint(painter: CandleSticksChartPainter(candles: state.candles)));
+                      }))
+            ])));
   }
 }
