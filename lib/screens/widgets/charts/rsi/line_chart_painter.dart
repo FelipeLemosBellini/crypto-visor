@@ -52,14 +52,14 @@ class RSIChartPainter extends CustomPainter {
       canvas.drawLine(lineStart, lineEnd, RSIHelper.lineRSI);
     }
 
-    for (int countLineRSi = averages.length-1; countLineRSi >=0; countLineRSi--) {
-      double width = size.width / averages.length;
-      Offset lineStart = Offset((countLineRSi * width),
-          ((size.height / 100) * (100 - averages[countLineRSi].value)) + BaseChart.marginVertical / 2);
-      Offset lineEnd = Offset(((countLineRSi - 1) * width),
-          ((size.height / 100) * (100 - averages[countLineRSi - 1].value)) + BaseChart.marginVertical / 2);
-      canvas.drawLine(lineStart, lineEnd, Paint()..color=Colors.redAccent..strokeWidth =1);
-    }
+    // for (int countLineRSi = averages.length-1; countLineRSi >=0; countLineRSi--) {
+    //   double width = size.width / averages.length;
+    //   Offset lineStart = Offset((countLineRSi * width),
+    //       ((size.height / 100) * (100 - averages[countLineRSi].value)) + BaseChart.marginVertical / 2);
+    //   Offset lineEnd = Offset(((countLineRSi - 1) * width),
+    //       ((size.height / 100) * (100 - averages[countLineRSi - 1].value)) + BaseChart.marginVertical / 2);
+    //   canvas.drawLine(lineStart, lineEnd, Paint()..color=Colors.redAccent..strokeWidth =1);
+    // }
   }
 
   void _createBandDashedLine(Canvas canvas, Size size) {

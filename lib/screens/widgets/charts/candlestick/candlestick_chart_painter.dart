@@ -17,9 +17,11 @@ class CandleSticksChartPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Size sizeChart = Size(size.width - 35, size.height);
+    Size sizeCandles = Size(sizeChart.width - 10, sizeChart.height);
+
     _createBackground(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
-    _createCandles(canvas, sizeChart);
+    _createCandles(canvas, sizeCandles);
     BaseChart.createWords(
         canvas: canvas,
         size: size,
@@ -55,10 +57,16 @@ class CandleSticksChartPainter extends CustomPainter {
     double distance = 0;
     for (int i = 0; i < candles.length; i++) {
       distance += distanceCandle;
+      double left = size.width - (distance + (sizeCandle * i));
+
+      double proportion = candleHelper.multipleProportionHeightCandles(size);
+
+      double top = proportion;
+
       Paint paint = Paint()
         ..color = candles[i].colorCandle
         ..strokeWidth = 1.5;
-      final rectBackground = Rect.fromLTWH(size.width - (distance + (sizeCandle * i)), 0, sizeCandle, 20);
+      final rectBackground = Rect.fromLTWH(left, top, sizeCandle, 20);
 
       canvas.drawRect(rectBackground, paint);
       canvas.drawLine(Offset(15, 0), Offset(15, 40), paint);

@@ -1,6 +1,8 @@
 import 'package:cryptovisor/core/entity/candle_data_entity.dart';
 import 'dart:math' as Math;
 
+import 'package:flutter/material.dart';
+
 class CandleHelper {
   final List<CandleDataEntity> listCandle;
 
@@ -16,14 +18,18 @@ class CandleHelper {
   }
 
   void _setMinValue() {
-    for (CandleDataEntity candle in listCandle) {
-      if (candle.low < _minValue) _minValue = candle.low;
+    _minValue = listCandle.first.low;
+    for (int i = 0;listCandle.length>i;i++) {
+      if (listCandle[i].low < _minValue) _minValue = listCandle[i].low;
     }
   }
 
   double _maxValue = 0;
   double _minValue = 0;
 
+  double multipleProportionHeightCandles(Size size) {
+    return size.height / (_maxValue - _minValue);
+  }
 
   List<double> get getNumbersForParameterChart {
     List<double> list = [];
