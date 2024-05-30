@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class BaseChart {
   static double marginVertical = 30;
-  static double paddingForNumbers = 30;
+  static double paddingForNumbers = 0;
 
   static void createWords(
       {required Canvas canvas,
@@ -28,7 +28,7 @@ abstract class BaseChart {
       required List<double> numbers,
       required Color fontColor,
       required double proportion}) {
-    size = Size(size.width - paddingForNumbers, size.height);
+    size = Size(size.width - paddingForNumbers - 10, size.height);
 
     for (int i = 0; i < numbers.length; i++) {
       TextPainter textPainter = TextPainter(
