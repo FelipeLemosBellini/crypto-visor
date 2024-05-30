@@ -22,10 +22,10 @@ class CandleSticksChartPainter extends CustomPainter {
     _createBackground(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
     _createCandles(canvas, sizeCandles);
-    BaseChart.createWords(
+    BaseChart.createWordsDynamicChart(
         canvas: canvas,
         size: size,
-        proporsion: 35,
+        proportion: 35,
         numbers: candleHelper.getNumbersForParameterChart,
         fontColor: CryptoVisorColors.whiteLabel.withOpacity(0.5));
   }
@@ -59,17 +59,16 @@ class CandleSticksChartPainter extends CustomPainter {
       distance += distanceCandle;
       double left = size.width - (distance + (sizeCandle * i));
 
-      double proportion = candleHelper.multipleProportionHeightCandles(size);
-
-      double top = proportion;
+      double top = candleHelper.multipleProportionTopCandles(size, candles[i].high);
+      double sizeCandleHeight = candleHelper.multipleProportionTopCandles(size, candles[i].low);
 
       Paint paint = Paint()
         ..color = candles[i].colorCandle
         ..strokeWidth = 1.5;
-      final rectBackground = Rect.fromLTWH(left, top, sizeCandle, 20);
+      final rectBackground = Rect.fromLTWH(left, size.height-top, sizeCandle, top-sizeCandleHeight);
 
       canvas.drawRect(rectBackground, paint);
-      canvas.drawLine(Offset(15, 0), Offset(15, 40), paint);
+      // canvas.drawLine(Offset(15, 0), Offset(15, 40), paint);
     }
   }
 

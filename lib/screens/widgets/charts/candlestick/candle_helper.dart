@@ -19,16 +19,18 @@ class CandleHelper {
 
   void _setMinValue() {
     _minValue = listCandle.first.low;
-    for (int i = 0;listCandle.length>i;i++) {
-      if (listCandle[i].low < _minValue) _minValue = listCandle[i].low;
+    for (CandleDataEntity candle in listCandle) {
+      if (candle.low < _minValue) _minValue = candle.low;
     }
   }
 
   double _maxValue = 0;
   double _minValue = 0;
 
-  double multipleProportionHeightCandles(Size size) {
-    return size.height / (_maxValue - _minValue);
+  double multipleProportionTopCandles(Size size, double convertValue) {
+    double proportion = (convertValue - _minValue) / (_maxValue - _minValue);
+
+    return proportion * size.height;
   }
 
   List<double> get getNumbersForParameterChart {

@@ -25,11 +25,11 @@ class RSIChartPainter extends CustomPainter {
     BaseChart.createWords(
         canvas: canvas,
         size: sizeNumbers,
-        proporsion: 100,
+        proportion: 100,
         numbers: linesDashed,
         fontColor: CryptoVisorColors.whiteLabel.withOpacity(0.5));
     BaseChart.createWords(
-        canvas: canvas, size: sizeNumbers, proporsion: 100, numbers: [averages.last.value], fontColor: Colors.white);
+        canvas: canvas, size: sizeNumbers, proportion: 100, numbers: [averages.last.value], fontColor: Colors.white);
   }
 
   void _createBackground(Canvas canvas, Size size) {
