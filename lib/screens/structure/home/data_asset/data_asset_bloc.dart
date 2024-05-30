@@ -17,26 +17,43 @@ class DataAssetBloc extends Cubit<DataAssetState> {
   }
 
   void _initPage() async {
-    // List<RelativeStrengthIndexModel> newList = [];
-    // for (int i = 0; i < state.rsi.length; i++) {
-    //   newList.add(state.rsi[i]);
-    // }
-    //
-    // emit(state.copyWith(rsi: newList));
-    // var response = await _dataCryptoRepository.getDataAndCharts(ticker: "BTC");
-    // response.fold((error) => print(error), (ResponseDataCryptoAndBarChartModel success) {
-    // state.averageEight = success.exponentialMovingAverageOf8days;
-    // });
-    List<CandleDataEntity> candles = [];
-    for (int i = 0; i < 10; i++) {
-      Random random = Random.secure();
-      double open = random.nextDouble() * 90 + 10;
-      double high = open + random.nextDouble() * 10;
-      double low = open - random.nextDouble() * 10;
-      double close = (high + low) / 2;
+    _createCandles();
+    _createRSI();
+  }
 
-      candles.add(CandleDataEntity(close: close, high: high, low: low, open: open, timestamp: DateTime.now()));
+  void _createCandles(){
+    List<CandleDataEntity> candleData = [];
+
+    for (int i = 0; i < 20; i++) {
+      DateTime timestamp = DateTime(2024, 1, 1 + i);
+      double open = Random().nextDouble() * (200 - 0) + 0;
+      double high = open + Random().nextDouble() * (200 - open);
+      double low = open - Random().nextDouble() * (open - 0);
+      double close = low + Random().nextDouble() * (high - low);
+
+      candleData.add(CandleDataEntity(
+        timestamp: timestamp,
+        open: double.parse(open.toStringAsFixed(2)),
+        high: double.parse(high.toStringAsFixed(2)),
+        low: double.parse(low.toStringAsFixed(2)),
+        close: double.parse(close.toStringAsFixed(2)),
+      ));
     }
-    state.copyWith(candles: candles);
+    emit(state.copyWith(candles: candleData));
+  }
+
+  void _createRSI(){
+    List<RelativeStrengthIndexModel> rsiData = [];
+
+    for (int i = 0; i < 20; i++) {
+      DateTime timestamp = DateTime(2024, 1, 1 + i);
+      double open = Random().nextDouble() * (100 - 0) + 0;
+
+      rsiData.add(RelativeStrengthIndexModel(
+        date: timestamp,
+        value: double.parse(open.toStringAsFixed(2))
+      ));
+    }
+    emit(state.copyWith(rsi: rsiData));
   }
 }

@@ -59,16 +59,18 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                             )));
                       })),
               Padding(
-                  padding: const EdgeInsets.only(top: 30,left: 8, right: 4),
-                  child: TweenAnimationBuilder(
-                      tween: Tween<double>(begin: 0, end: 100),
-                      duration: const Duration(seconds: 10),
-                      builder: (BuildContext context, double percentage, Widget? widget) {
-                        return SizedBox(
-                            height: 250,
-                            width: MediaQuery.sizeOf(context).width,
-                            child: CustomPaint(painter: CandleSticksChartPainter(candles: state.candles)));
-                      }))
+                  padding: const EdgeInsets.only(top: 30, left: 8, right: 4),
+                  child: Visibility(
+                      visible: state.candles.isNotEmpty,
+                      child: TweenAnimationBuilder(
+                          tween: Tween<double>(begin: 0, end: 100),
+                          duration: const Duration(seconds: 10),
+                          builder: (BuildContext context, double percentage, Widget? widget) {
+                            return SizedBox(
+                                height: 250,
+                                width: MediaQuery.sizeOf(context).width,
+                                child: CustomPaint(painter: CandleSticksChartPainter(candles: state.candles)));
+                          })))
             ])));
   }
 }

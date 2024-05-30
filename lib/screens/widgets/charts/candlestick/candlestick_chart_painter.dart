@@ -16,12 +16,13 @@ class CandleSticksChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Size sizeChart = Size(size.width - 35, size.height);
+    Size sizeChart = Size(size.width - 50, size.height);
     Size sizeCandles = Size(sizeChart.width - 10, sizeChart.height);
 
     _createBackground(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
     _createCandles(canvas, sizeCandles);
+    _createCandlesLines(canvas, sizeCandles);
     BaseChart.createWordsDynamicChart(
         canvas: canvas,
         size: size,
@@ -59,16 +60,37 @@ class CandleSticksChartPainter extends CustomPainter {
       distance += distanceCandle;
       double left = size.width - (distance + (sizeCandle * i));
 
+      double top = candleHelper.multipleProportionTopCandles(size, candles[i].open);
+      double sizeCandleHeight = candleHelper.multipleProportionTopCandles(size, candles[i].close);
+
+      Paint paint = Paint()
+        ..color = candles[i].colorCandle
+        ..strokeWidth = 1.5;
+      final rectBackground = Rect.fromLTWH(left, size.height - top, sizeCandle, top - sizeCandleHeight);
+
+      canvas.drawRect(rectBackground, paint);
+    }
+  }
+
+  void _createCandlesLines(Canvas canvas, Size size) {
+    double distanceCandle = size.width * 0.5 / candles.length;
+    double sizeCandle = (size.width * 0.5 / candles.length) < 20 ? size.width * 0.5 / candles.length : 10;
+    double candleWidth = sizeCandle/10;
+
+    double distance = 0;
+    for (int i = 0; i < candles.length; i++) {
+      distance += distanceCandle;
+      double left = size.width - (distance + (sizeCandle * i) - (sizeCandle / 2)+candleWidth);
+
       double top = candleHelper.multipleProportionTopCandles(size, candles[i].high);
       double sizeCandleHeight = candleHelper.multipleProportionTopCandles(size, candles[i].low);
 
       Paint paint = Paint()
         ..color = candles[i].colorCandle
         ..strokeWidth = 1.5;
-      final rectBackground = Rect.fromLTWH(left, size.height-top, sizeCandle, top-sizeCandleHeight);
+      final rectBackground = Rect.fromLTWH(left, size.height - top, candleWidth, top - sizeCandleHeight);
 
       canvas.drawRect(rectBackground, paint);
-      // canvas.drawLine(Offset(15, 0), Offset(15, 40), paint);
     }
   }
 
