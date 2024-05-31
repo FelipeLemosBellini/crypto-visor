@@ -21,10 +21,10 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     _createRSI();
   }
 
-  void _createCandles(){
+  void _createCandles() {
     List<CandleDataEntity> candleData = [];
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 10; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
       double open = Random().nextDouble() * (200 - 0) + 0;
       double high = open + Random().nextDouble() * (200 - open);
@@ -42,17 +42,14 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     emit(state.copyWith(candles: candleData));
   }
 
-  void _createRSI(){
+  void _createRSI() {
     List<RelativeStrengthIndexModel> rsiData = [];
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 10; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
       double open = Random().nextDouble() * (100 - 0) + 0;
 
-      rsiData.add(RelativeStrengthIndexModel(
-        date: timestamp,
-        value: double.parse(open.toStringAsFixed(2))
-      ));
+      rsiData.add(RelativeStrengthIndexModel(date: timestamp, value: double.parse(open.toStringAsFixed(2))));
     }
     emit(state.copyWith(rsi: rsiData));
   }

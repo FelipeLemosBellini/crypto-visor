@@ -15,7 +15,7 @@ class RSIChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Size sizeChart = Size(size.width - paddingNumberForChart, size.height - BaseChart.marginVertical);
+    Size sizeChart = Size(size.width * 0.85, size.height - BaseChart.marginVertical);
     Size sizeNumbers = Size(size.width, size.height - BaseChart.marginVertical);
 
     _createBackground(canvas, sizeChart);
@@ -24,12 +24,14 @@ class RSIChartPainter extends CustomPainter {
     _createLineAround(canvas, sizeChart);
     BaseChart.createWords(
         canvas: canvas,
-        size: sizeNumbers,
-        proportion: 100,
+        size: Size(sizeChart.width + (sizeChart.width * 0.05), sizeChart.height),
         numbers: linesDashed,
         fontColor: CryptoVisorColors.whiteLabel.withOpacity(0.5));
     BaseChart.createWords(
-        canvas: canvas, size: sizeNumbers, proportion: 100, numbers: [averages.last.value], fontColor: Colors.white);
+        canvas: canvas,
+        size: Size(sizeChart.width + (sizeChart.width * 0.05), sizeChart.height),
+        numbers: [averages.last.value],
+        fontColor: Colors.white);
   }
 
   void _createBackground(Canvas canvas, Size size) {

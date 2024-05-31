@@ -51,4 +51,12 @@ class CandleHelper {
     String valueFormatted = number.toStringAsFixed(fractionDigits!);
     return double.parse(valueFormatted);
   }
+
+  double distanceCandle({required Size sizeChart, required int lengthList}) {
+    return sizeChart.width * 0.3 / (lengthList );
+  }
+
+  double sizeCandle({required Size sizeChart, required int lengthList}) {
+    return (sizeChart.width * 0.7 / (lengthList ));
+  }
 }

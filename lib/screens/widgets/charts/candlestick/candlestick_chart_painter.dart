@@ -16,8 +16,8 @@ class CandleSticksChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Size sizeChart = Size(size.width - 50, size.height);
-    Size sizeCandles = Size(sizeChart.width - 10, sizeChart.height);
+    Size sizeChart = Size(size.width * 0.85, size.height);
+    Size sizeCandles = Size(sizeChart.width, sizeChart.height);
 
     _createBackground(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
@@ -25,8 +25,7 @@ class CandleSticksChartPainter extends CustomPainter {
     _createCandlesLines(canvas, sizeCandles);
     BaseChart.createWordsDynamicChart(
         canvas: canvas,
-        size: size,
-        proportion: 35,
+        size: Size(sizeChart.width + (sizeChart.width * 0.05), sizeChart.height),
         numbers: candleHelper.getNumbersForParameterChart,
         fontColor: CryptoVisorColors.whiteLabel.withOpacity(0.5));
   }
@@ -52,13 +51,14 @@ class CandleSticksChartPainter extends CustomPainter {
   }
 
   void _createCandles(Canvas canvas, Size size) {
-    double distanceCandle = size.width * 0.5 / candles.length;
-    double sizeCandle = (size.width * 0.5 / candles.length) < 20 ? size.width * 0.5 / candles.length : 10;
+    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
+    double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
 
     double distance = 0;
+    distance += distanceCandle;
     for (int i = 0; i < candles.length; i++) {
       distance += distanceCandle;
-      double left = size.width - (distance + (sizeCandle * i));
+      double left = size.width - (distance + (sizeCandle * i)) - distanceCandle;
 
       double top = candleHelper.multipleProportionTopCandles(size, candles[i].open);
       double sizeCandleHeight = candleHelper.multipleProportionTopCandles(size, candles[i].close);
@@ -73,21 +73,22 @@ class CandleSticksChartPainter extends CustomPainter {
   }
 
   void _createCandlesLines(Canvas canvas, Size size) {
-    double distanceCandle = size.width * 0.5 / candles.length;
-    double sizeCandle = (size.width * 0.5 / candles.length) < 20 ? size.width * 0.5 / candles.length : 10;
-    double candleWidth = sizeCandle/10;
+    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
+    double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
+    // double candleWidth = sizeCandle / 10;
+    double candleWidth = (distanceCandle * (candles.length + 2) + sizeCandle * candles.length) / size.width;
 
     double distance = 0;
+
+    distance += distanceCandle;
     for (int i = 0; i < candles.length; i++) {
       distance += distanceCandle;
-      double left = size.width - (distance + (sizeCandle * i) - (sizeCandle / 2)+candleWidth);
+      double left = size.width - (distance + (sizeCandle * i) - (sizeCandle / 2) + candleWidth) - distanceCandle;
 
       double top = candleHelper.multipleProportionTopCandles(size, candles[i].high);
       double sizeCandleHeight = candleHelper.multipleProportionTopCandles(size, candles[i].low);
 
-      Paint paint = Paint()
-        ..color = candles[i].colorCandle
-        ..strokeWidth = 1.5;
+      Paint paint = Paint()..color = candles[i].colorCandle;
       final rectBackground = Rect.fromLTWH(left, size.height - top, candleWidth, top - sizeCandleHeight);
 
       canvas.drawRect(rectBackground, paint);
