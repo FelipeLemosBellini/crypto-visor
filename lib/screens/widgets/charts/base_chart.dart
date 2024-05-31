@@ -4,11 +4,8 @@ abstract class BaseChart {
   static double marginVertical = 30;
 
   static void createWords(
-      {required Canvas canvas,
-      required Size size,
-      required List<double> numbers,
-      required Color fontColor}) {
-    size = Size(size.width- 10, size.height);
+      {required Canvas canvas, required Size size, required List<double> numbers, required Color fontColor}) {
+    size = Size(size.width - 10, size.height);
     for (int i = 0; i < numbers.length; i++) {
       TextPainter textPainter = TextPainter(
         textDirection: TextDirection.rtl,
@@ -21,10 +18,7 @@ abstract class BaseChart {
   }
 
   static void createWordsDynamicChart(
-      {required Canvas canvas,
-      required Size size,
-      required List<double> numbers,
-      required Color fontColor}) {
+      {required Canvas canvas, required Size size, required List<double> numbers, required Color fontColor}) {
     size = Size(size.width - 10, size.height);
 
     for (int i = 0; i < numbers.length; i++) {
@@ -36,7 +30,7 @@ abstract class BaseChart {
       )..layout(maxWidth: 40, minWidth: 0);
 
       textPainter.paint(
-          canvas, Offset(size.width, (((size.height * ((i) / (numbers.length - 1)))) - (marginVertical / 4))));
+          canvas, Offset(size.width, ((size.height * ((i) / (numbers.length - 1))) - (marginVertical / 4))));
     }
   }
 }

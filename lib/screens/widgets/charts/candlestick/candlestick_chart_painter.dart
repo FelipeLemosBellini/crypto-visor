@@ -2,6 +2,7 @@ import 'package:cryptovisor/core/entity/candle_data_entity.dart';
 import 'package:cryptovisor/screens/helper/crypto_visor_colors.dart';
 import 'package:cryptovisor/screens/widgets/charts/base_chart.dart';
 import 'package:cryptovisor/screens/widgets/charts/candlestick/candle_helper.dart';
+import 'package:cryptovisor/screens/widgets/charts/rsi/rsi_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class CandleSticksChartPainter extends CustomPainter {
   final List<CandleDataEntity> candles;
 
   late CandleHelper candleHelper;
+  List<double> linesDashed = [0.0, 20.0, 50.0, 80.0, 100.0];
 
   CandleSticksChartPainter({required this.candles}) {
     candleHelper = CandleHelper(listCandle: candles);
@@ -23,6 +25,7 @@ class CandleSticksChartPainter extends CustomPainter {
     _createLineAround(canvas, sizeChart);
     _createCandles(canvas, sizeCandles);
     _createCandlesLines(canvas, sizeCandles);
+    _createBandDashedLine(canvas, sizeChart);
     BaseChart.createWordsDynamicChart(
         canvas: canvas,
         size: Size(sizeChart.width + (sizeChart.width * 0.05), sizeChart.height),
@@ -31,7 +34,7 @@ class CandleSticksChartPainter extends CustomPainter {
   }
 
   void _createBackground(Canvas canvas, Size size) {
-    final rectBackground = Rect.fromLTWH(0, 0, size.width, ((size.height)));
+    final rectBackground = Rect.fromLTWH(0, 0, size.width, (size.height));
     canvas.drawRect(rectBackground, Paint()..color = const Color(0xFF161A25));
   }
 
@@ -40,14 +43,8 @@ class CandleSticksChartPainter extends CustomPainter {
       ..color = Colors.white54
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
-    Path path = Path();
-    path.moveTo(0, 0);
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
 
-    canvas.drawPath(path, contourLine);
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), contourLine);
   }
 
   void _createCandles(Canvas canvas, Size size) {
@@ -75,7 +72,6 @@ class CandleSticksChartPainter extends CustomPainter {
   void _createCandlesLines(Canvas canvas, Size size) {
     double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
     double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
-    // double candleWidth = sizeCandle / 10;
     double candleWidth = (distanceCandle * (candles.length + 2) + sizeCandle * candles.length) / size.width;
 
     double distance = 0;
@@ -92,6 +88,23 @@ class CandleSticksChartPainter extends CustomPainter {
       final rectBackground = Rect.fromLTWH(left, size.height - top, candleWidth, top - sizeCandleHeight);
 
       canvas.drawRect(rectBackground, paint);
+    }
+  }
+
+  void _createBandDashedLine(Canvas canvas, Size size) {
+    int dashedLineQuantity = (size.width / 10).round();
+    for (double line in linesDashed) {
+      double heightLine = (size.height / 100) * line;
+      for (int i = 0; i < dashedLineQuantity; i++) {
+        if (i.isEven) {
+          Offset lineStart =
+              Offset((i * (size.width / dashedLineQuantity)), heightLine);
+          Offset lineEnd =
+              Offset(((i + 1) * (size.width / dashedLineQuantity)), heightLine);
+
+          canvas.drawLine(lineStart, lineEnd, RSIHelper.lineDashed);
+        }
+      }
     }
   }
 

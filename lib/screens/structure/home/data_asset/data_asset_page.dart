@@ -59,7 +59,7 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                             )));
                       })),
               Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 8, right: 4),
+                  padding: const EdgeInsets.only(top: 60, left: 8, right: 4),
                   child: Visibility(
                       visible: state.candles.isNotEmpty,
                       child: TweenAnimationBuilder(
