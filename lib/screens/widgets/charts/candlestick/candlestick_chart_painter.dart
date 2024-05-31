@@ -22,10 +22,10 @@ class CandleSticksChartPainter extends CustomPainter {
     Size sizeCandles = Size(sizeChart.width, sizeChart.height);
 
     _createBackground(canvas, sizeChart);
-    _createLineAround(canvas, sizeChart);
     _createCandles(canvas, sizeCandles);
     _createCandlesLines(canvas, sizeCandles);
     _createBandDashedLine(canvas, sizeChart);
+    _createLineAround(canvas, sizeChart);
     BaseChart.createWordsDynamicChart(
         canvas: canvas,
         size: Size(sizeChart.width + (sizeChart.width * 0.05), sizeChart.height),
@@ -97,10 +97,8 @@ class CandleSticksChartPainter extends CustomPainter {
       double heightLine = (size.height / 100) * line;
       for (int i = 0; i < dashedLineQuantity; i++) {
         if (i.isEven) {
-          Offset lineStart =
-              Offset((i * (size.width / dashedLineQuantity)), heightLine);
-          Offset lineEnd =
-              Offset(((i + 1) * (size.width / dashedLineQuantity)), heightLine);
+          Offset lineStart = Offset((i * (size.width / dashedLineQuantity)), heightLine);
+          Offset lineEnd = Offset(((i + 1) * (size.width / dashedLineQuantity)), heightLine);
 
           canvas.drawLine(lineStart, lineEnd, RSIHelper.lineDashed);
         }

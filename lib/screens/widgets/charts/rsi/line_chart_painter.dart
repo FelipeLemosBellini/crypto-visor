@@ -18,8 +18,8 @@ class RSIChartPainter extends CustomPainter {
     Size sizeChart = Size(size.width * 0.85, size.height + (BaseChart.marginVertical) / 2);
 
     _createBackground(canvas, sizeChart);
-    _createBandDashedLine(canvas, sizeChart);
     _createRSILine(canvas, sizeChart);
+    _createBandDashedLine(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
     BaseChart.createWords(
         canvas: canvas,
