@@ -13,6 +13,7 @@ class CandleSticksChartPainter extends CustomPainter {
   final List<BollingerBandsModel> bollingerBandsModel;
   final List<MovingAverageOfModel> movingAverageModel;
   final bool showBollinger;
+  final bool showMovingAverage14;
 
   late CandleHelper candleHelper;
   List<double> linesDashed = [0.0, 20.0, 50.0, 80.0, 100.0];
@@ -20,6 +21,7 @@ class CandleSticksChartPainter extends CustomPainter {
   CandleSticksChartPainter(
       {required this.movingAverageModel,
       required this.showBollinger,
+      required this.showMovingAverage14,
       required this.candles,
       required this.bollingerBandsModel}) {
     candleHelper = CandleHelper(listCandle: candles);
@@ -35,7 +37,7 @@ class CandleSticksChartPainter extends CustomPainter {
     _createCandlesLines(canvas, sizeCandles);
     if (showBollinger) _createBollingerLine(canvas, sizeCandles);
     _createBandDashedLine(canvas, sizeChart);
-    _createMovingAverage14(canvas, sizeChart);
+    if (showMovingAverage14) _createMovingAverage14(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
     BaseChart.createWordsDynamicChart(
         canvas: canvas,

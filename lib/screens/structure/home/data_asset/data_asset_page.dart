@@ -37,7 +37,10 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
             backgroundColor: CryptoVisorColors.scaffoldColor,
             appBar: CryptoVisorAppBar(textTitle: widget.ticker, onTap: () => context.pop()),
             body: ListView(children: [
-              CryptoVisorCheckboxWidget(value: state.showBollinger, setValue: _bloc.setValueBollinger),
+              Row(children: [
+                CryptoVisorCheckboxWidget(value: state.showBollinger, setValue: _bloc.setValueBollinger,title: "Bollinger Bands"),
+                CryptoVisorCheckboxWidget(value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage14,title: "Moving Average 14")
+              ]),
               Padding(
                   padding: const EdgeInsets.only(top: 10, left: 8, right: 4),
                   child: Visibility(
@@ -53,6 +56,7 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                                     painter: CandleSticksChartPainter(
                                         movingAverageModel: state.movingAverage14,
                                         showBollinger: state.showBollinger,
+                                        showMovingAverage14: state.showMovingAverage14,
                                         candles: state.candles,
                                         bollingerBandsModel: state.bollinger)));
                           }))),

@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 class CryptoVisorCheckboxWidget extends StatelessWidget {
   final bool value;
   final Function(bool?)? setValue;
+  final String title;
 
-  const CryptoVisorCheckboxWidget({super.key, required this.value, required this.setValue});
+  const CryptoVisorCheckboxWidget({super.key, required this.value, required this.setValue, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.zero,
         child: Row(children: [
-          Checkbox.adaptive(
+          Checkbox(
               value: value,
               onChanged: setValue,
               checkColor: CryptoVisorColors.red,
@@ -30,7 +31,7 @@ class CryptoVisorCheckboxWidget extends StatelessWidget {
                   return Color(0xFFD3D3D3);
                 }
               })),
-          Text("Bollinger Bands").bodyBaseLight()
+          Text(title).bodyBaseLight()
         ]));
   }
 }

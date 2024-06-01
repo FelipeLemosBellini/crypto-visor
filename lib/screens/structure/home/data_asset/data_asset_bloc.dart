@@ -28,6 +28,9 @@ class DataAssetBloc extends Cubit<DataAssetState> {
   void setValueBollinger(bool? value){
     emit(state.copyWith(showBollinger: value!));
   }
+  void setValueMovingAverage14(bool? value){
+    emit(state.copyWith(showMovingAverage14: value!));
+  }
 
   void _createCandles() {
     List<CandleDataEntity> candleData = [];
@@ -53,7 +56,7 @@ class DataAssetBloc extends Cubit<DataAssetState> {
   void _createBollinger() {
     List<BollingerBandsModel> bollingerData = [];
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 15; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
       double open = Random().nextDouble() * (1000 - 0) + 0;
       double high = open + Random().nextDouble() * (1000 - open);
@@ -73,7 +76,7 @@ class DataAssetBloc extends Cubit<DataAssetState> {
   void _createRSI() {
     List<RelativeStrengthIndexModel> rsiData = [];
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 15; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
       double open = Random().nextDouble() * (100 - 0) + 0;
 
@@ -85,7 +88,7 @@ class DataAssetBloc extends Cubit<DataAssetState> {
   void _createMovingAverage(){
     List<MovingAverageOfModel> listAverage = [];
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 15; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
       double open = Random().nextDouble() * (1000 - 0) + 0;
 
