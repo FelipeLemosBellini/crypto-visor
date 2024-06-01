@@ -10,11 +10,12 @@ import 'package:flutter/material.dart';
 class CandleSticksChartPainter extends CustomPainter {
   final List<CandleDataEntity> candles;
   final List<BollingerBandsModel> bollingerBandsModel;
+  final bool showBollinger;
 
   late CandleHelper candleHelper;
   List<double> linesDashed = [0.0, 20.0, 50.0, 80.0, 100.0];
 
-  CandleSticksChartPainter({required this.candles, required this.bollingerBandsModel}) {
+  CandleSticksChartPainter({required this.showBollinger, required this.candles, required this.bollingerBandsModel}) {
     candleHelper = CandleHelper(listCandle: candles);
   }
 
@@ -26,7 +27,7 @@ class CandleSticksChartPainter extends CustomPainter {
     _createBackground(canvas, sizeChart);
     _createCandles(canvas, sizeCandles);
     _createCandlesLines(canvas, sizeCandles);
-    _createBollingerLine(canvas, sizeCandles);
+    if (showBollinger) _createBollingerLine(canvas, sizeCandles);
     _createBandDashedLine(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
     BaseChart.createWordsDynamicChart(

@@ -23,13 +23,17 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     _createBollinger();
   }
 
+  void setValueBollinger(bool? value){
+    emit(state.copyWith(showBollinger: value!));
+  }
+
   void _createCandles() {
     List<CandleDataEntity> candleData = [];
 
     for (int i = 0; i < 40; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
-      double open = Random().nextDouble() * (200 - 0) + 0;
-      double high = open + Random().nextDouble() * (200 - open);
+      double open = Random().nextDouble() * (1000 - 0) + 0;
+      double high = open + Random().nextDouble() * (1000 - open);
       double low = open - Random().nextDouble() * (open - 0);
       double close = low + Random().nextDouble() * (high - low);
 
@@ -49,8 +53,8 @@ class DataAssetBloc extends Cubit<DataAssetState> {
 
     for (int i = 0; i < 40; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
-      double open = Random().nextDouble() * (200 - 0) + 0;
-      double high = open + Random().nextDouble() * (200 - open);
+      double open = Random().nextDouble() * (1000 - 0) + 0;
+      double high = open + Random().nextDouble() * (1000 - open);
       double low = open - Random().nextDouble() * (open - 0);
       double close = low + Random().nextDouble() * (high - low);
 

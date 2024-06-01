@@ -4,6 +4,7 @@ import 'package:cryptovisor/core/entity/crypto_data/exponential_moving_average_o
 import 'package:cryptovisor/core/entity/crypto_data/relative_strength_index_model.dart';
 
 class DataAssetState {
+  bool showBollinger = false;
   List<RelativeStrengthIndexModel> rsi = [];
   List<BollingerBandsModel> bollinger = [];
 
@@ -13,8 +14,10 @@ class DataAssetState {
     List<RelativeStrengthIndexModel>? rsi,
     List<BollingerBandsModel>? bollinger,
     List<CandleDataEntity>? candles,
+    bool? showBollinger,
   }) {
     return DataAssetState()
+      ..showBollinger = showBollinger ?? this.showBollinger
       ..rsi = rsi ?? this.rsi
       ..bollinger = bollinger ?? this.bollinger
       ..candles = candles ?? this.candles;

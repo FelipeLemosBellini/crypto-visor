@@ -4,8 +4,10 @@ import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_bloc.da
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_state.dart';
 import 'package:cryptovisor/screens/widgets/charts/candlestick/candlestick_chart_painter.dart';
 import 'package:cryptovisor/screens/widgets/charts/rsi/line_chart_painter.dart';
+import 'package:cryptovisor/screens/widgets/crypto_visor_checkbox_widget.dart';
 import 'package:cryptovisor/screens/widgets/export_crypto_visor_material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -42,7 +44,7 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
             backgroundColor: CryptoVisorColors.scaffoldColor,
             appBar: CryptoVisorAppBar(textTitle: widget.ticker, onTap: () => context.pop()),
             body: ListView(children: [
-              // Checkbox(value: value, onChanged: onChanged),
+              CryptoVisorCheckboxWidget(value: state.showBollinger, setValue: _bloc.setValueBollinger),
               Padding(
                   padding: const EdgeInsets.only(top: 10, left: 8, right: 4),
                   child: Visibility(
@@ -56,7 +58,9 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                                 width: MediaQuery.sizeOf(context).width,
                                 child: CustomPaint(
                                     painter: CandleSticksChartPainter(
-                                        candles: state.candles, bollingerBandsModel: state.bollinger)));
+                                        showBollinger: state.showBollinger,
+                                        candles: state.candles,
+                                        bollingerBandsModel: state.bollinger)));
                           }))),
               Padding(
                   padding: const EdgeInsets.only(top: 30, left: 8, right: 4),
