@@ -12,12 +12,12 @@ class IconCoinListWidget extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: Row(children: [
-          Container(
+          SizedBox(
             width: 24,
             height: 24,
             child: Image.memory(coinModel.base64Image),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Text(coinModel.name).bodyBaseMedium()
         ]));
   }

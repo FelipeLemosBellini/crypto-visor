@@ -18,14 +18,11 @@ class CryptoVisorAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.only(left: 18),
         child: Padding(
             padding: EdgeInsets.only(top: heightTop),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Row(children: [
-                CryptoVisorGestureDetector(
-                    onTap: onTap, child: const Icon(Icons.arrow_back, color: CryptoVisorColors.whiteLabel)),
-                // SvgPicture.asset(ScienceDexVector.arrow_back.svg, height: 45),
-                const SizedBox(width: 12),
-                Text(textTitle).bodyLargeSemiBold(style: const TextStyle(fontSize: 20))
-              ])
+            child: Row(children: [
+              CryptoVisorGestureDetector(
+                  onTap: onTap, child: const Icon(Icons.arrow_back, color: CryptoVisorColors.whiteLabel)),
+              const SizedBox(width: 12),
+              Text(textTitle, textAlign: TextAlign.center).bodyLargeSemiBold(style: const TextStyle(fontSize: 20))
             ])));
   }
 

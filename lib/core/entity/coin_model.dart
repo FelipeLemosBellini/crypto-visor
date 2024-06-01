@@ -10,8 +10,13 @@ class CoinModel {
 
   factory CoinModel.fromMap(Map<String, dynamic> map) {
     Uint8List imageBytes = base64.decode(map["base64Image"]);
+    String name = map["name"];
+    List<String> listLetters = name.split("");
+
+    listLetters.first = listLetters.first.toUpperCase();
+
     return CoinModel(
-      name: map["name"],
+      name: listLetters.join(),
       base64Image: imageBytes,
     );
   }
