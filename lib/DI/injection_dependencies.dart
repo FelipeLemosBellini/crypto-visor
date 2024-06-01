@@ -12,10 +12,10 @@ abstract class DI {
   static void setupDependencies() {
     //services and repositories
     _getIt.registerLazySingleton<IApiRest>(() => ApiRest());
-    _getIt.registerLazySingleton<DataCryptoRepository>(() => DataCryptoRepository());
+    _getIt.registerLazySingleton<IDataCryptoRepository>(() => DataCryptoRepository());
 
     //controller of pages
     _getIt.registerFactory<DataAssetBloc>(() => DataAssetBloc());
-    _getIt.registerFactory<ListAssetBloc>(() => ListAssetBloc());
+    _getIt.registerFactory<ListAssetBloc>(() => ListAssetBloc(dataCryptoRepository: DataCryptoRepository()));
   }
 }

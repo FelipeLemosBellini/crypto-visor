@@ -1,4 +1,4 @@
-import 'package:cryptovisor/core/entity/candle_data_entity.dart';
+import 'package:cryptovisor/core/entity/crypto_data/candle_data_entity.dart';
 import 'package:cryptovisor/core/entity/crypto_data/bollinger_bands_model.dart';
 import 'package:cryptovisor/core/entity/crypto_data/moving_average_model.dart';
 import 'package:cryptovisor/core/entity/crypto_data/relative_strength_index_model.dart';

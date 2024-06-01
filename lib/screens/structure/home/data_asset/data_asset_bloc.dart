@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:cryptovisor/core/entity/candle_data_entity.dart';
+import 'package:cryptovisor/core/entity/crypto_data/candle_data_entity.dart';
 import 'package:cryptovisor/core/entity/crypto_data/bollinger_bands_model.dart';
 import 'package:cryptovisor/core/entity/crypto_data/moving_average_model.dart';
 import 'package:cryptovisor/core/entity/crypto_data/relative_strength_index_model.dart';
@@ -25,10 +25,11 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     _createMovingAverage();
   }
 
-  void setValueBollinger(bool? value){
+  void setValueBollinger(bool? value) {
     emit(state.copyWith(showBollinger: value!));
   }
-  void setValueMovingAverage14(bool? value){
+
+  void setValueMovingAverage14(bool? value) {
     emit(state.copyWith(showMovingAverage14: value!));
   }
 
@@ -85,7 +86,7 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     emit(state.copyWith(rsi: rsiData));
   }
 
-  void _createMovingAverage(){
+  void _createMovingAverage() {
     List<MovingAverageOfModel> listAverage = [];
 
     for (int i = 0; i < 15; i++) {

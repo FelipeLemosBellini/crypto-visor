@@ -1,4 +1,4 @@
-import 'package:cryptovisor/core/entity/candle_data_entity.dart';
+import 'package:cryptovisor/core/entity/crypto_data/candle_data_entity.dart';
 import 'dart:math' as Math;
 
 import 'package:flutter/material.dart';
