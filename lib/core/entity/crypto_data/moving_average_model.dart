@@ -1,14 +1,14 @@
-class ExponentialMovingAverageOfDays {
+class MovingAverageOfModel {
   final DateTime date;
   final double value;
 
-  ExponentialMovingAverageOfDays({
+  MovingAverageOfModel({
     required this.date,
     required this.value,
   });
 
-  factory ExponentialMovingAverageOfDays.fromMap(Map<String, dynamic> map) {
-    return ExponentialMovingAverageOfDays(
+  factory MovingAverageOfModel.fromMap(Map<String, dynamic> map) {
+    return MovingAverageOfModel(
       date: DateTime.parse(map["date"]),
       value: double.tryParse(map['value']) ?? 0.0,
     );

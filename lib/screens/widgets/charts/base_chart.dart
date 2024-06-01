@@ -33,4 +33,6 @@ abstract class BaseChart {
           canvas, Offset(size.width, ((size.height * ((i) / (numbers.length - 1))) - (marginVertical / 4))));
     }
   }
+
+
 }

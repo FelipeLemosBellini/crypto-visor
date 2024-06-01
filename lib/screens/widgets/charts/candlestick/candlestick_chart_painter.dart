@@ -1,5 +1,6 @@
 import 'package:cryptovisor/core/entity/candle_data_entity.dart';
 import 'package:cryptovisor/core/entity/crypto_data/bollinger_bands_model.dart';
+import 'package:cryptovisor/core/entity/crypto_data/moving_average_model.dart';
 import 'package:cryptovisor/screens/helper/crypto_visor_colors.dart';
 import 'package:cryptovisor/screens/widgets/charts/base_chart.dart';
 import 'package:cryptovisor/screens/widgets/charts/candlestick/candle_helper.dart';
@@ -10,12 +11,17 @@ import 'package:flutter/material.dart';
 class CandleSticksChartPainter extends CustomPainter {
   final List<CandleDataEntity> candles;
   final List<BollingerBandsModel> bollingerBandsModel;
+  final List<MovingAverageOfModel> movingAverageModel;
   final bool showBollinger;
 
   late CandleHelper candleHelper;
   List<double> linesDashed = [0.0, 20.0, 50.0, 80.0, 100.0];
 
-  CandleSticksChartPainter({required this.showBollinger, required this.candles, required this.bollingerBandsModel}) {
+  CandleSticksChartPainter(
+      {required this.movingAverageModel,
+      required this.showBollinger,
+      required this.candles,
+      required this.bollingerBandsModel}) {
     candleHelper = CandleHelper(listCandle: candles);
   }
 
@@ -29,6 +35,7 @@ class CandleSticksChartPainter extends CustomPainter {
     _createCandlesLines(canvas, sizeCandles);
     if (showBollinger) _createBollingerLine(canvas, sizeCandles);
     _createBandDashedLine(canvas, sizeChart);
+    _createMovingAverage14(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
     BaseChart.createWordsDynamicChart(
         canvas: canvas,
@@ -120,18 +127,52 @@ class CandleSticksChartPainter extends CustomPainter {
       baseLine.add(model.baseLine);
       lowerLine.add(model.lowerLine);
     }
-    _drawBollingerLine(canvas, size, RSIHelper.externalBollingerLine, higherLine);
-    _drawBollingerLine(canvas, size, RSIHelper.midBollingerLine, baseLine);
-    _drawBollingerLine(canvas, size, RSIHelper.externalBollingerLine, lowerLine);
+    _drawMovingAverageLine(canvas, size, RSIHelper.externalBollingerLine, higherLine);
+    _drawMovingAverageLine(canvas, size, RSIHelper.midBollingerLine, baseLine);
+    _drawMovingAverageLine(canvas, size, RSIHelper.externalBollingerLine, lowerLine);
   }
 
-  void _drawBollingerLine(Canvas canvas, Size size, Paint paint, List<double> value) {
+  void _createMovingAverage14(Canvas canvas, Size size) {
+    List<double> moving = [];
+
+    for (var model in movingAverageModel) {
+      moving.add(model.value);
+    }
+
+    _drawMovingAverageLine(canvas, size, RSIHelper.averageLine14, moving);
+  }
+
+  void _drawLine(Canvas canvas, Size size, Paint paint, List<double> value) {
     double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
     for (int position = 0; position < value.length - 1; position++) {
       double point = candleHelper.multipleProportionTopCandles(size, value[position]);
       double nextPoint = candleHelper.multipleProportionTopCandles(size, value[position + 1]);
       Offset lineStart = Offset((position * size.width / value.length) + distanceCandle, size.height - point);
       Offset lineEnd = Offset(((position + 1) * size.width / value.length) + distanceCandle, size.height - nextPoint);
+      canvas.drawLine(lineStart, lineEnd, paint);
+    }
+  }
+
+  void _drawMovingAverageLine(Canvas canvas, Size size, Paint paint, List<double> value) {
+    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
+    double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
+    double candleWidth = (distanceCandle * (candles.length + 2) + sizeCandle * candles.length) / size.width;
+
+    double distance = 0;
+
+    distance += distanceCandle;
+    for (int position = 0; position < value.length - 1; position++) {
+      distance += distanceCandle;
+      double left = size.width - (distance + (sizeCandle * position) - (sizeCandle / 2) + candleWidth) - distanceCandle;
+
+      double leftNext = size.width -
+          (distance + (sizeCandle * (position + 1)) - (sizeCandle / 2) + candleWidth) -
+          (distanceCandle * 2);
+
+      double heightProportion = size.height - candleHelper.multipleProportionTopCandles(size, value[position]);
+      double nextHeightProportion = size.height - candleHelper.multipleProportionTopCandles(size, value[position + 1]);
+      Offset lineStart = Offset(left, heightProportion);
+      Offset lineEnd = Offset(leftNext, nextHeightProportion);
       canvas.drawLine(lineStart, lineEnd, paint);
     }
   }

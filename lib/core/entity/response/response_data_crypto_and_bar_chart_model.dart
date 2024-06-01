@@ -1,13 +1,13 @@
 import 'package:cryptovisor/core/entity/crypto_data/bollinger_bands_model.dart';
-import 'package:cryptovisor/core/entity/crypto_data/exponential_moving_average_of_days.dart';
+import 'package:cryptovisor/core/entity/crypto_data/moving_average_model.dart';
 import 'package:cryptovisor/core/entity/crypto_data/relative_strength_index_model.dart';
 
 class ResponseDataCryptoAndBarChartModel {
   final double lastCloseValue;
   final List<RelativeStrengthIndexModel> relativeStrengthIndex;
-  final List<ExponentialMovingAverageOfDays> exponentialMovingAverageOf8days;
-  final List<ExponentialMovingAverageOfDays> exponentialMovingAverageOf14days;
-  final List<ExponentialMovingAverageOfDays> exponentialMovingAverageOf30days;
+  final List<MovingAverageOfModel> exponentialMovingAverageOf8days;
+  final List<MovingAverageOfModel> exponentialMovingAverageOf14days;
+  final List<MovingAverageOfModel> exponentialMovingAverageOf30days;
   final List<BollingerBandsModel> bollingerBands;
 
   ResponseDataCryptoAndBarChartModel({
@@ -32,20 +32,20 @@ class ResponseDataCryptoAndBarChartModel {
 
   factory ResponseDataCryptoAndBarChartModel.fromMap(Map<String, dynamic> map) {
     List<RelativeStrengthIndexModel> rsiModel = [];
-    List<ExponentialMovingAverageOfDays> listEmaModel8Days = [];
-    List<ExponentialMovingAverageOfDays> listEmaModel14Days = [];
-    List<ExponentialMovingAverageOfDays> listEmaModel30Days = [];
+    List<MovingAverageOfModel> listEmaModel8Days = [];
+    List<MovingAverageOfModel> listEmaModel14Days = [];
+    List<MovingAverageOfModel> listEmaModel30Days = [];
     List<BollingerBandsModel> listBollingerModel = [];
 
     map['relativeStrengthIndex'].map((element) => rsiModel.add(RelativeStrengthIndexModel.fromMap(element))).toList();
     map['exponentialMovingAverageOf8days']
-        .map((element) => listEmaModel8Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
+        .map((element) => listEmaModel8Days.add(MovingAverageOfModel.fromMap(element)))
         .toList();
     map['exponentialMovingAverageOf14days']
-        .map((element) => listEmaModel14Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
+        .map((element) => listEmaModel14Days.add(MovingAverageOfModel.fromMap(element)))
         .toList();
     map['exponentialMovingAverageOf30days']
-        .map((element) => listEmaModel30Days.add(ExponentialMovingAverageOfDays.fromMap(element)))
+        .map((element) => listEmaModel30Days.add(MovingAverageOfModel.fromMap(element)))
         .toList();
     map['bollingerBands'].map((element) => listBollingerModel.add(BollingerBandsModel.fromMap(element))).toList();
 
