@@ -1,4 +1,5 @@
 import 'package:cryptovisor/core/entity/candle_data_entity.dart';
+import 'package:cryptovisor/core/entity/crypto_data/bollinger_bands_model.dart';
 import 'package:cryptovisor/screens/helper/crypto_visor_colors.dart';
 import 'package:cryptovisor/screens/widgets/charts/base_chart.dart';
 import 'package:cryptovisor/screens/widgets/charts/candlestick/candle_helper.dart';
@@ -8,11 +9,12 @@ import 'package:flutter/material.dart';
 
 class CandleSticksChartPainter extends CustomPainter {
   final List<CandleDataEntity> candles;
+  final List<BollingerBandsModel> bollingerBandsModel;
 
   late CandleHelper candleHelper;
   List<double> linesDashed = [0.0, 20.0, 50.0, 80.0, 100.0];
 
-  CandleSticksChartPainter({required this.candles}) {
+  CandleSticksChartPainter({required this.candles, required this.bollingerBandsModel}) {
     candleHelper = CandleHelper(listCandle: candles);
   }
 
@@ -24,6 +26,7 @@ class CandleSticksChartPainter extends CustomPainter {
     _createBackground(canvas, sizeChart);
     _createCandles(canvas, sizeCandles);
     _createCandlesLines(canvas, sizeCandles);
+    _createBollingerLine(canvas, sizeCandles);
     _createBandDashedLine(canvas, sizeChart);
     _createLineAround(canvas, sizeChart);
     BaseChart.createWordsDynamicChart(
@@ -103,6 +106,32 @@ class CandleSticksChartPainter extends CustomPainter {
           canvas.drawLine(lineStart, lineEnd, RSIHelper.lineDashed);
         }
       }
+    }
+  }
+
+  void _createBollingerLine(Canvas canvas, Size size) {
+    List<double> higherLine = [];
+    List<double> baseLine = [];
+    List<double> lowerLine = [];
+
+    for (var model in bollingerBandsModel) {
+      higherLine.add(model.higherLine);
+      baseLine.add(model.baseLine);
+      lowerLine.add(model.lowerLine);
+    }
+    _drawBollingerLine(canvas, size, RSIHelper.externalBollingerLine, higherLine);
+    _drawBollingerLine(canvas, size, RSIHelper.midBollingerLine, baseLine);
+    _drawBollingerLine(canvas, size, RSIHelper.externalBollingerLine, lowerLine);
+  }
+
+  void _drawBollingerLine(Canvas canvas, Size size, Paint paint, List<double> value) {
+    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
+    for (int position = 0; position < value.length - 1; position++) {
+      double point = candleHelper.multipleProportionTopCandles(size, value[position]);
+      double nextPoint = candleHelper.multipleProportionTopCandles(size, value[position + 1]);
+      Offset lineStart = Offset((position * size.width / value.length) + distanceCandle, size.height - point);
+      Offset lineEnd = Offset(((position + 1) * size.width / value.length) + distanceCandle, size.height - nextPoint);
+      canvas.drawLine(lineStart, lineEnd, paint);
     }
   }
 

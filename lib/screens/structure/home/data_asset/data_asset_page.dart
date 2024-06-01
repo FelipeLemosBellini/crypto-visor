@@ -41,9 +41,25 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
         builder: (_, state) => Scaffold(
             backgroundColor: CryptoVisorColors.scaffoldColor,
             appBar: CryptoVisorAppBar(textTitle: widget.ticker, onTap: () => context.pop()),
-            body: Column(children: [
+            body: ListView(children: [
+              // Checkbox(value: value, onChanged: onChanged),
               Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 4),
+                  padding: const EdgeInsets.only(top: 10, left: 8, right: 4),
+                  child: Visibility(
+                      visible: state.candles.isNotEmpty,
+                      child: TweenAnimationBuilder(
+                          tween: Tween<double>(begin: 0, end: 100),
+                          duration: const Duration(seconds: 10),
+                          builder: (BuildContext context, double percentage, Widget? widget) {
+                            return SizedBox(
+                                height: 250,
+                                width: MediaQuery.sizeOf(context).width,
+                                child: CustomPaint(
+                                    painter: CandleSticksChartPainter(
+                                        candles: state.candles, bollingerBandsModel: state.bollinger)));
+                          }))),
+              Padding(
+                  padding: const EdgeInsets.only(top: 30, left: 8, right: 4),
                   child: TweenAnimationBuilder(
                       tween: Tween<double>(begin: 0, end: 100),
                       duration: const Duration(seconds: 10),
@@ -57,20 +73,7 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                               // animation: _animation,
                               averages: state.rsi,
                             )));
-                      })),
-              Padding(
-                  padding: const EdgeInsets.only(top: 60, left: 8, right: 4),
-                  child: Visibility(
-                      visible: state.candles.isNotEmpty,
-                      child: TweenAnimationBuilder(
-                          tween: Tween<double>(begin: 0, end: 100),
-                          duration: const Duration(seconds: 10),
-                          builder: (BuildContext context, double percentage, Widget? widget) {
-                            return SizedBox(
-                                height: 250,
-                                width: MediaQuery.sizeOf(context).width,
-                                child: CustomPaint(painter: CandleSticksChartPainter(candles: state.candles)));
-                          })))
+                      }))
             ])));
   }
 }

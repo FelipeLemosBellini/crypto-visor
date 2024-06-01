@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cryptovisor/core/entity/candle_data_entity.dart';
+import 'package:cryptovisor/core/entity/crypto_data/bollinger_bands_model.dart';
 import 'package:cryptovisor/core/entity/crypto_data/relative_strength_index_model.dart';
 import 'package:cryptovisor/core/entity/response/response_data_crypto_and_bar_chart_model.dart';
 import 'package:cryptovisor/core/repositories/data_crypto/data_crypto_repository.dart';
@@ -19,12 +20,13 @@ class DataAssetBloc extends Cubit<DataAssetState> {
   void _initPage() async {
     _createCandles();
     _createRSI();
+    _createBollinger();
   }
 
   void _createCandles() {
     List<CandleDataEntity> candleData = [];
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 40; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
       double open = Random().nextDouble() * (200 - 0) + 0;
       double high = open + Random().nextDouble() * (200 - open);
@@ -42,10 +44,30 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     emit(state.copyWith(candles: candleData));
   }
 
+  void _createBollinger() {
+    List<BollingerBandsModel> bollingerData = [];
+
+    for (int i = 0; i < 40; i++) {
+      DateTime timestamp = DateTime(2024, 1, 1 + i);
+      double open = Random().nextDouble() * (200 - 0) + 0;
+      double high = open + Random().nextDouble() * (200 - open);
+      double low = open - Random().nextDouble() * (open - 0);
+      double close = low + Random().nextDouble() * (high - low);
+
+      bollingerData.add(BollingerBandsModel(
+        date: timestamp,
+        higherLine: double.parse(high.toStringAsFixed(2)),
+        baseLine: double.parse(close.toStringAsFixed(2)),
+        lowerLine: double.parse(low.toStringAsFixed(2)),
+      ));
+    }
+    emit(state.copyWith(bollinger: bollingerData));
+  }
+
   void _createRSI() {
     List<RelativeStrengthIndexModel> rsiData = [];
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 40; i++) {
       DateTime timestamp = DateTime(2024, 1, 1 + i);
       double open = Random().nextDouble() * (100 - 0) + 0;
 
