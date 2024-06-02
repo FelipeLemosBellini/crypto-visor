@@ -1,3 +1,4 @@
+import 'package:cryptovisor/core/helpers/crypto_visor_format_number_helper.dart';
 import 'package:flutter/material.dart';
 
 class CandleDataEntity {
@@ -21,10 +22,10 @@ class CandleDataEntity {
 
   factory CandleDataEntity.fromMap(Map<String, dynamic> map) {
     return CandleDataEntity(
-        close: double.tryParse(map["closePrice"]) ?? 0.0,
-        open: double.tryParse(map["openPrice"]) ?? 0.0,
-        low: double.tryParse(map["lowestPrice"]) ?? 0.0,
-        high: double.tryParse(map["highestPrice"]) ?? 0.0,
-        timestamp: DateTime.parse(map["timestamp"]));
+        close: CryptoVisorFormatNumberHelper.formatNumber(map["close"] ?? 0.0),
+        open: CryptoVisorFormatNumberHelper.formatNumber(map["open"] ?? 0.0),
+        low: CryptoVisorFormatNumberHelper.formatNumber(map["low"] ?? 0.0),
+        high: CryptoVisorFormatNumberHelper.formatNumber(map["high"] ?? 0.0),
+        timestamp: DateTime.parse(map["date"] ?? DateTime.now()));
   }
 }

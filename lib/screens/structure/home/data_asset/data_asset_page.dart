@@ -27,6 +27,7 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
+    _bloc.getDataCoin(widget.ticker);
   }
 
   @override

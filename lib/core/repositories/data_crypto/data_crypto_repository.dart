@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cryptovisor/core/entity/coin_model.dart';
+import 'package:cryptovisor/core/entity/crypto_data/candle_data_entity.dart';
 import 'package:cryptovisor/core/entity/response/response_data_crypto_and_bar_chart_model.dart';
 import 'package:cryptovisor/core/exception/crypto_visor_exception.dart';
 import 'package:cryptovisor/core/helpers/crypto_visor_try_catch.dart';
@@ -15,21 +16,13 @@ class DataCryptoRepository extends IDataCryptoRepository {
 
   @override
   Future<Either<CryptoExceptionException, ResponseDataCryptoAndBarChartModel>> getDataAndCharts(
-      {required String ticker}) async {
+      {required String assetName}) async {
     return executeWithCatch(() async {
-      // var response = await _apiRest.get("", query: {"ticker": ticker});
-      // return ResponseDataCryptoAndBarChartModel.fromMap(response.data);
-      Map<String, dynamic> json = {
-        "lastCloseValue": 10.0,
-        "relativeStrengthIndex": [],
-        "exponentialMovingAverageOf8days": [],
-        "exponentialMovingAverageOf14days": [],
-        "exponentialMovingAverageOf30days": [],
-        "bollingerBands": [
-          {"date": "2024-05-01T18:19:51.833Z", "higher": 0.0, "lower": 0.0, "base": 0.0}
-        ]
-      };
-      return ResponseDataCryptoAndBarChartModel.fromMap(json);
+      var response = await _apiRest
+          .get("${SettingsApp.baseApi}/OhlcStatistics?FirstDate=2024-04-01&LastDate=2024-05-14&ECoinType=$assetName");
+      var decodedResponse = jsonDecode(response.toString());
+
+      return ResponseDataCryptoAndBarChartModel.fromMap(decodedResponse['data']);
     });
   }
 
@@ -42,6 +35,23 @@ class DataCryptoRepository extends IDataCryptoRepository {
 
       for (var coinData in decodedResponse['data']) {
         list.add(CoinModel.fromMap(coinData));
+      }
+
+      return list;
+    });
+  }
+
+  @override
+  Future<Either<CryptoExceptionException, List<CandleDataEntity>>> getCandles({required String assetName}) async {
+    return executeWithCatch(() async {
+      var response = await _apiRest.get(
+          "${SettingsApp.baseApi}/OhlcHistory/GetData?FirstDate=2024-04-01&LastDate=2024-05-14&ECoinType=$assetName");
+      var decodedResponse = jsonDecode(response.toString());
+
+      List<CandleDataEntity> list = [];
+
+      for (var coinData in decodedResponse['data']) {
+        list.add(CandleDataEntity.fromMap(coinData));
       }
 
       return list;

@@ -1,3 +1,5 @@
+import 'package:cryptovisor/core/helpers/crypto_visor_format_number_helper.dart';
+
 class MovingAverageOfModel {
   final DateTime date;
   final double value;
@@ -10,7 +12,7 @@ class MovingAverageOfModel {
   factory MovingAverageOfModel.fromMap(Map<String, dynamic> map) {
     return MovingAverageOfModel(
       date: DateTime.parse(map["date"]),
-      value: double.tryParse(map['value']) ?? 0.0,
+      value: CryptoVisorFormatNumberHelper.formatNumber(map['value'] ?? 0.0),
     );
   }
 }

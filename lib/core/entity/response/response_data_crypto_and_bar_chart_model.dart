@@ -19,16 +19,6 @@ class ResponseDataCryptoAndBarChartModel {
     required this.bollingerBands,
   });
 
-  ResponseDataCryptoAndBarChartModel criarObjeto() {
-    return ResponseDataCryptoAndBarChartModel(
-      bollingerBands: [],
-      exponentialMovingAverageOf8days: [],
-      exponentialMovingAverageOf14days: [],
-      exponentialMovingAverageOf30days: [],
-      relativeStrengthIndex: [],
-      lastCloseValue: 0.0,
-    );
-  }
 
   factory ResponseDataCryptoAndBarChartModel.fromMap(Map<String, dynamic> map) {
     List<RelativeStrengthIndexModel> rsiModel = [];

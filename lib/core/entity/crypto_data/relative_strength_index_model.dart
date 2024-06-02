@@ -1,3 +1,5 @@
+import 'package:cryptovisor/core/helpers/crypto_visor_format_number_helper.dart';
+
 class RelativeStrengthIndexModel {
   final DateTime date;
   final double value;
@@ -9,8 +11,8 @@ class RelativeStrengthIndexModel {
 
   factory RelativeStrengthIndexModel.fromMap(Map<String, dynamic> map) {
     return RelativeStrengthIndexModel(
-      date: DateTime.parse(map["date"]),
-      value: double.tryParse(map['value']) ?? 0.0,
+      date: DateTime.tryParse(map["date"]) ?? DateTime.now(),
+      value: CryptoVisorFormatNumberHelper.formatNumber(map['value'] ?? 0.0),
     );
   }
 }

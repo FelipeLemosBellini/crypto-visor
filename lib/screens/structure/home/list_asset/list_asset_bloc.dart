@@ -14,8 +14,8 @@ class ListAssetBloc extends Cubit<ListAssetState> {
     getListCoin();
   }
 
-  void goToDataAsset(BuildContext context) async {
-    context.pushNamed(RouteNames.dataAssetPage, pathParameters: {"ticker": "BTC"});
+  void goToDataAsset(BuildContext context, String nameAsset) async {
+    context.pushNamed(RouteNames.dataAssetPage, pathParameters: {"ticker": nameAsset});
   }
 
   void getListCoin() async {

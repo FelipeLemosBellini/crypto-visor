@@ -3,7 +3,7 @@ import 'package:cryptovisor/screens/helper/export_helper_screen.dart';
 import 'package:cryptovisor/screens/structure/home/list_asset/list_asset_bloc.dart';
 import 'package:cryptovisor/screens/structure/home/list_asset/list_asset_state.dart';
 import 'package:cryptovisor/screens/widgets/app_bar/crypto_visor_title_app_bar.dart';
-import 'package:cryptovisor/screens/widgets/export_crypto_visor_material.dart';
+import 'package:cryptovisor/screens/widgets/crypto_visor_gesture_detector.dart';
 import 'package:cryptovisor/screens/widgets/item_coin_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +48,9 @@ class _ListAssetPageState extends State<ListAssetPage> {
                       child: ListView.separated(
                           itemCount: state.listAssets.length,
                           separatorBuilder: (_, __) => const Divider(color: Color(0x0f6e6e6e), height: 1, thickness: 2),
-                          itemBuilder: (_, index) => IconCoinListWidget(coinModel: state.listAssets[index]))))
+                          itemBuilder: (_, index) => CryptoVisorGestureDetector(
+                              onTap: () => _bloc.goToDataAsset(context, state.listAssets[index].name),
+                              child: IconCoinListWidget(coinModel: state.listAssets[index])))))
             ])));
   }
 }

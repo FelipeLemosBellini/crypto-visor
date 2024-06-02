@@ -12,17 +12,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class DataAssetBloc extends Cubit<DataAssetState> {
-  final IDataCryptoRepository _dataCryptoRepository = GetIt.I.get<DataCryptoRepository>();
+  final IDataCryptoRepository dataCryptoRepository;
 
-  DataAssetBloc() : super(DataAssetState()) {
+  DataAssetBloc({required this.dataCryptoRepository}) : super(DataAssetState()) {
     _initPage();
   }
 
   void _initPage() async {
-    _createCandles();
-    _createRSI();
-    _createBollinger();
-    _createMovingAverage();
+    // _createCandles();
+    // _createRSI();
+    // _createBollinger();
+    // _createMovingAverage();
+  }
+
+  void getDataCoin(String nameAsset) async {
+    _getCandles(nameAsset);
+    _getStatistics(nameAsset);
+  }
+
+  void _getCandles(String nameAsset) async {
+    var response = await dataCryptoRepository.getCandles(assetName: nameAsset);
+    response.fold((l) => l, (response) {
+      emit(state.copyWith(candles: response.reversed.toList()));
+    });
+  }
+
+  void _getStatistics(String nameAsset) async {
+    var response = await dataCryptoRepository.getDataAndCharts(assetName: nameAsset);
+    response.fold((l) => l, (response) {
+      emit(state.copyWith(
+          bollinger: response.bollingerBands,
+          movingAverage14: response.exponentialMovingAverageOf14days,
+          rsi: response.relativeStrengthIndex));
+    });
   }
 
   void setValueBollinger(bool? value) {

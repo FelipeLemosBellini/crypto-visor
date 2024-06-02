@@ -15,7 +15,7 @@ abstract class DI {
     _getIt.registerLazySingleton<IDataCryptoRepository>(() => DataCryptoRepository());
 
     //controller of pages
-    _getIt.registerFactory<DataAssetBloc>(() => DataAssetBloc());
+    _getIt.registerFactory<DataAssetBloc>(() => DataAssetBloc(dataCryptoRepository: DataCryptoRepository()));
     _getIt.registerFactory<ListAssetBloc>(() => ListAssetBloc(dataCryptoRepository: DataCryptoRepository()));
   }
 }

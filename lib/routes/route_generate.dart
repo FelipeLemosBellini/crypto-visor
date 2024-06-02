@@ -1,4 +1,3 @@
-import 'package:cryptovisor/routes/animation_transitions.dart';
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
