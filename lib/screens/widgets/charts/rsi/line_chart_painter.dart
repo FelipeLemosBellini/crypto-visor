@@ -10,13 +10,8 @@ import 'package:flutter/material.dart';
 class RSIChartPainter extends CustomPainter {
   final List<RelativeStrengthIndexModel> averages;
   final List<CandleDataEntity> candles;
-  late CandleHelper candleHelper;
 
-  RSIChartPainter({required this.averages, required this.candles}) {
-    if (candles.isNotEmpty) {
-      candleHelper = CandleHelper(listCandle: candles);
-    }
-  }
+  RSIChartPainter({required this.averages, required this.candles});
 
   List<double> linesDashed = [0.0, 20.0, 50.0, 80.0, 100.0];
   double paddingNumberForChart = 35;
@@ -73,8 +68,8 @@ class RSIChartPainter extends CustomPainter {
   }
 
   void _drawMovingAverageLine(Canvas canvas, Size size, Paint paint, List<double> value) {
-    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
-    double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
+    double distanceCandle = BaseChart.distanceCandle(sizeChart: size, lengthList: candles.length);
+    double sizeCandle = BaseChart.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
     double candleWidth = (distanceCandle * (candles.length + 2) + sizeCandle * candles.length) / size.width;
 
     double distance = 0;

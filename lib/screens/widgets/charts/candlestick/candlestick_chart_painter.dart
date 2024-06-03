@@ -24,7 +24,7 @@ class CandleSticksChartPainter extends CustomPainter {
       required this.showMovingAverage14,
       required this.candles,
       required this.bollingerBandsModel}) {
-    candleHelper = CandleHelper(listCandle: candles);
+    candleHelper = CandleHelper(listCandle: candles,listBollinger: bollingerBandsModel);
   }
 
   @override
@@ -61,8 +61,8 @@ class CandleSticksChartPainter extends CustomPainter {
   }
 
   void _createCandles(Canvas canvas, Size size) {
-    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
-    double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
+    double distanceCandle = BaseChart.distanceCandle(sizeChart: size, lengthList: candles.length);
+    double sizeCandle = BaseChart.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
 
     double distance = 0;
     distance += distanceCandle;
@@ -83,8 +83,8 @@ class CandleSticksChartPainter extends CustomPainter {
   }
 
   void _createCandlesLines(Canvas canvas, Size size) {
-    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
-    double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
+    double distanceCandle = BaseChart.distanceCandle(sizeChart: size, lengthList: candles.length);
+    double sizeCandle = BaseChart.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
     double candleWidth = (distanceCandle * (candles.length + 2) + sizeCandle * candles.length) / size.width;
 
     double distance = 0;
@@ -145,8 +145,8 @@ class CandleSticksChartPainter extends CustomPainter {
   }
 
   void _drawMovingAverageLine(Canvas canvas, Size size, Paint paint, List<double> value) {
-    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
-    double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
+    double distanceCandle = BaseChart.distanceCandle(sizeChart: size, lengthList: candles.length);
+    double sizeCandle = BaseChart.sizeCandle(sizeChart: size, lengthList: candles.length + 1);
     double candleWidth = (distanceCandle * (candles.length + 2) + sizeCandle * candles.length) / size.width;
 
     double distance = 0;

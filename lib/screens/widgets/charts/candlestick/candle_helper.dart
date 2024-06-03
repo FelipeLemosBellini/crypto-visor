@@ -1,12 +1,13 @@
+import 'package:cryptovisor/core/entity/crypto_data/bollinger_bands_model.dart';
 import 'package:cryptovisor/core/entity/crypto_data/candle_data_entity.dart';
-import 'dart:math' as Math;
 
 import 'package:flutter/material.dart';
 
 class CandleHelper {
   final List<CandleDataEntity> listCandle;
+  final List<BollingerBandsModel> listBollinger;
 
-  CandleHelper({required this.listCandle}) {
+  CandleHelper({required this.listCandle, required this.listBollinger}) {
     _setMaxValue();
     _setMinValue();
   }
@@ -15,12 +16,18 @@ class CandleHelper {
     for (CandleDataEntity candle in listCandle) {
       if (candle.high > _maxValue) _maxValue = candle.high;
     }
+    for (BollingerBandsModel model in listBollinger) {
+      if (model.higherLine > _maxValue) _maxValue = model.higherLine;
+    }
   }
 
   void _setMinValue() {
     _minValue = listCandle.first.low;
     for (CandleDataEntity candle in listCandle) {
       if (candle.low < _minValue) _minValue = candle.low;
+    }
+    for (BollingerBandsModel model in listBollinger) {
+      if (model.lowerLine < _minValue) _minValue = model.lowerLine;
     }
   }
 
@@ -52,11 +59,4 @@ class CandleHelper {
     return double.parse(valueFormatted);
   }
 
-  double distanceCandle({required Size sizeChart, required int lengthList}) {
-    return sizeChart.width * 0.3 / (lengthList);
-  }
-
-  double sizeCandle({required Size sizeChart, required int lengthList}) {
-    return (sizeChart.width * 0.7 / (lengthList));
-  }
 }

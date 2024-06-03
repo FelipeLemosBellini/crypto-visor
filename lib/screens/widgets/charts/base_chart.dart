@@ -34,5 +34,11 @@ abstract class BaseChart {
     }
   }
 
+  static double distanceCandle({required Size sizeChart, required int lengthList}) {
+    return sizeChart.width * 0.3 / (lengthList);
+  }
 
+  static double sizeCandle({required Size sizeChart, required int lengthList}) {
+    return (sizeChart.width * 0.7 / (lengthList));
+  }
 }
