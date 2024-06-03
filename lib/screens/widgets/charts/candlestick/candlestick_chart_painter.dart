@@ -144,17 +144,6 @@ class CandleSticksChartPainter extends CustomPainter {
     _drawMovingAverageLine(canvas, size, RSIHelper.averageLine14, moving);
   }
 
-  void _drawLine(Canvas canvas, Size size, Paint paint, List<double> value) {
-    double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
-    for (int position = 0; position < value.length - 1; position++) {
-      double point = candleHelper.multipleProportionTopCandles(size, value[position]);
-      double nextPoint = candleHelper.multipleProportionTopCandles(size, value[position + 1]);
-      Offset lineStart = Offset((position * size.width / value.length) + distanceCandle, size.height - point);
-      Offset lineEnd = Offset(((position + 1) * size.width / value.length) + distanceCandle, size.height - nextPoint);
-      canvas.drawLine(lineStart, lineEnd, paint);
-    }
-  }
-
   void _drawMovingAverageLine(Canvas canvas, Size size, Paint paint, List<double> value) {
     double distanceCandle = candleHelper.distanceCandle(sizeChart: size, lengthList: candles.length);
     double sizeCandle = candleHelper.sizeCandle(sizeChart: size, lengthList: candles.length + 1);

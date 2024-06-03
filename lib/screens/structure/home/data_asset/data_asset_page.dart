@@ -39,8 +39,12 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
             appBar: CryptoVisorAppBar(textTitle: widget.ticker, onTap: () => context.pop()),
             body: ListView(children: [
               Row(children: [
-                CryptoVisorCheckboxWidget(value: state.showBollinger, setValue: _bloc.setValueBollinger,title: "Bollinger Bands"),
-                CryptoVisorCheckboxWidget(value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage14,title: "Moving Average 14")
+                CryptoVisorCheckboxWidget(
+                    value: state.showBollinger, setValue: _bloc.setValueBollinger, title: "Bollinger Bands"),
+                CryptoVisorCheckboxWidget(
+                    value: state.showMovingAverage14,
+                    setValue: _bloc.setValueMovingAverage14,
+                    title: "Moving Average 14")
               ]),
               Padding(
                   padding: const EdgeInsets.only(top: 10, left: 8, right: 4),
@@ -61,15 +65,19 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                                         candles: state.candles,
                                         bollingerBandsModel: state.bollinger)));
                           }))),
-              Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 8, right: 4),
-                  child: SizedBox(
-                      height: MediaQuery.sizeOf(context).width * 0.6,
-                      width: MediaQuery.sizeOf(context).width,
-                      child: CustomPaint(
-                          painter: RSIChartPainter(
-                        averages: state.rsi,
-                      ))))
+        Visibility(
+            visible: state.candles.isNotEmpty && state.rsi.isNotEmpty,
+            child: Padding(
+                    padding: const EdgeInsets.only(top: 30, left: 8, right: 4),
+                    child: SizedBox(
+                        height: MediaQuery.sizeOf(context).width * 0.6,
+                        width: MediaQuery.sizeOf(context).width,
+                        child: CustomPaint(
+                            painter: RSIChartPainter(
+                          candles: state.candles,
+                          averages: state.rsi,
+                        )))),
+              )
             ])));
   }
 }

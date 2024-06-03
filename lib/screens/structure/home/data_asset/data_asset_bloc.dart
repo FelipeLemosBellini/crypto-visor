@@ -15,14 +15,14 @@ class DataAssetBloc extends Cubit<DataAssetState> {
   final IDataCryptoRepository dataCryptoRepository;
 
   DataAssetBloc({required this.dataCryptoRepository}) : super(DataAssetState()) {
-    _initPage();
+    // _initPage();
   }
 
   void _initPage() async {
-    // _createCandles();
-    // _createRSI();
-    // _createBollinger();
-    // _createMovingAverage();
+    _createCandles();
+    _createRSI();
+    _createBollinger();
+    _createMovingAverage();
   }
 
   void getDataCoin(String nameAsset) async {

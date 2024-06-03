@@ -53,10 +53,10 @@ class CandleHelper {
   }
 
   double distanceCandle({required Size sizeChart, required int lengthList}) {
-    return sizeChart.width * 0.3 / (lengthList );
+    return sizeChart.width * 0.3 / (lengthList);
   }
 
   double sizeCandle({required Size sizeChart, required int lengthList}) {
-    return (sizeChart.width * 0.7 / (lengthList ));
+    return (sizeChart.width * 0.7 / (lengthList));
   }
 }
