@@ -1,5 +1,4 @@
 import 'package:cryptovisor/core/entity/coin_model.dart';
-import 'package:cryptovisor/routes/route_names.dart';
 import 'package:cryptovisor/screens/helper/crypto_visor_colors.dart';
 import 'package:cryptovisor/screens/helper/export_helper_screen.dart';
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_bloc.dart';
@@ -41,15 +40,11 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
             appBar: CryptoVisorAppBar(coinModel: widget.coinModel, onTap: () => context.pop()),
             body: ListView(padding: EdgeInsets.only(top: 16), children: [
               Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: Text("Contação atual: " + state.quotationValue).bodyBaseMedium(),
-              ),
-              Row(children: [
-                CryptoVisorCheckboxWidget(
-                    value: state.showBollinger, setValue: _bloc.setValueBollinger, title: "Bandas de Bollinger"),
-                CryptoVisorCheckboxWidget(
-                    value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage14, title: "Média movel 14")
-              ]),
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Row(children: [
+                    Text("Cotação atual: ").bodyBaseMedium(style: TextStyle(color: Colors.white70)),
+                    Text(state.quotationValue + " USD").bodyBaseMedium()
+                  ])),
               Padding(
                   padding: const EdgeInsets.only(top: 10, left: 8, right: 4),
                   child: Visibility(
@@ -63,16 +58,20 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                                 width: MediaQuery.sizeOf(context).width,
                                 child: CustomPaint(
                                     painter: CandleSticksChartPainter(
-                                        movingAverageModel: state.movingAverage14,
+                                        movingAverageModel8: state.movingAverage8,
+                                        movingAverageModel14: state.movingAverage14,
+                                        movingAverageModel30: state.movingAverage30,
                                         showBollinger: state.showBollinger,
+                                        showMovingAverage8: state.showMovingAverage8,
                                         showMovingAverage14: state.showMovingAverage14,
+                                        showMovingAverage30: state.showMovingAverage30,
                                         candles: state.candles,
                                         bollingerBandsModel: state.bollinger)));
                           }))),
               Visibility(
                   visible: state.candles.isNotEmpty && state.rsi.isNotEmpty,
                   child: Padding(
-                      padding: const EdgeInsets.only(top: 30, left: 8, right: 4),
+                      padding: const EdgeInsets.only(top: 30, bottom: 40, left: 8, right: 4),
                       child: SizedBox(
                           height: MediaQuery.sizeOf(context).width * 0.6,
                           width: MediaQuery.sizeOf(context).width,
@@ -80,7 +79,17 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                               painter: RSIChartPainter(
                             candles: state.candles,
                             averages: state.rsi,
-                          )))))
+                          ))))),
+              Column(children: [
+                CryptoVisorCheckboxWidget(
+                    value: state.showBollinger, setValue: _bloc.setValueBollinger, title: "Bandas de Bollinger"),
+                CryptoVisorCheckboxWidget(
+                    value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage8, title: "Média movel 8"),
+                CryptoVisorCheckboxWidget(
+                    value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage14, title: "Média movel 14"),
+                CryptoVisorCheckboxWidget(
+                    value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage30, title: "Média movel 30")
+              ])
             ])));
   }
 }

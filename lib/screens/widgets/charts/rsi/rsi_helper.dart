@@ -14,9 +14,15 @@ abstract class RSIHelper {
     ..strokeWidth = 1.5
     ..color = const Color(0xFF00FFC6);
 
+  static Paint averageLine8 = Paint()
+    ..strokeWidth = 1.5
+    ..color = const Color(0xFFFF0117);
   static Paint averageLine14 = Paint()
     ..strokeWidth = 1.5
     ..color = const Color(0xFFF6C51C);
+  static Paint averageLine30 = Paint()
+    ..strokeWidth = 1.5
+    ..color = const Color(0xFF6C83FA);
 
 
   static Paint midBollingerLine = Paint()

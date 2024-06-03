@@ -16,19 +16,19 @@ class CryptoVisorCheckboxWidget extends StatelessWidget {
           Checkbox(
               value: value,
               onChanged: setValue,
-              checkColor: CryptoVisorColors.red,
+              checkColor: CryptoVisorColors.white,
               overlayColor: MaterialStateProperty.resolveWith((Set states) {
                 if (states.contains(MaterialState.selected)) {
-                  return Color(0xFFFFFFFF);
+                  return CryptoVisorColors.primaryColor;
                 } else {
-                  return Color(0xFFFA0A0A);
+                  return CryptoVisorColors.primaryColor;
                 }
               }),
               fillColor: MaterialStateProperty.resolveWith((Set states) {
                 if (states.contains(MaterialState.selected)) {
-                  return Color(0xFFEFEDED);
+                  return CryptoVisorColors.primaryColor;
                 } else {
-                  return Color(0xFFD3D3D3);
+                  return CryptoVisorColors.whiteLabel;
                 }
               })),
           Text(title).bodyBaseLight()

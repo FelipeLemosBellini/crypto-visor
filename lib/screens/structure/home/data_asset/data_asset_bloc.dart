@@ -43,7 +43,9 @@ class DataAssetBloc extends Cubit<DataAssetState> {
       emit(state.copyWith(
           bollinger: response.bollingerBands,
           quotationValue: response.lastCloseValue.toStringAsFixed(2),
+          movingAverage8: response.exponentialMovingAverageOf8days,
           movingAverage14: response.exponentialMovingAverageOf14days,
+          movingAverage30: response.exponentialMovingAverageOf30days,
           rsi: response.relativeStrengthIndex));
     });
   }
@@ -52,8 +54,16 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     emit(state.copyWith(showBollinger: value!));
   }
 
+  void setValueMovingAverage8(bool? value) {
+    emit(state.copyWith(showMovingAverage8: value!));
+  }
+
   void setValueMovingAverage14(bool? value) {
     emit(state.copyWith(showMovingAverage14: value!));
+  }
+
+  void setValueMovingAverage30(bool? value) {
+    emit(state.copyWith(showMovingAverage30: value!));
   }
 
   void _createCandles() {

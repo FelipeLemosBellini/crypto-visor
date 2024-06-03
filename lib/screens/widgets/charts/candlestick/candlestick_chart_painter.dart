@@ -11,20 +11,28 @@ import 'package:flutter/material.dart';
 class CandleSticksChartPainter extends CustomPainter {
   final List<CandleDataEntity> candles;
   final List<BollingerBandsModel> bollingerBandsModel;
-  final List<MovingAverageOfModel> movingAverageModel;
+  final List<MovingAverageOfModel> movingAverageModel8;
+  final List<MovingAverageOfModel> movingAverageModel14;
+  final List<MovingAverageOfModel> movingAverageModel30;
   final bool showBollinger;
+  final bool showMovingAverage8;
   final bool showMovingAverage14;
+  final bool showMovingAverage30;
 
   late CandleHelper candleHelper;
   List<double> linesDashed = [0.0, 20.0, 50.0, 80.0, 100.0];
 
   CandleSticksChartPainter(
-      {required this.movingAverageModel,
+      {required this.movingAverageModel8,
+      required this.movingAverageModel14,
+      required this.movingAverageModel30,
       required this.showBollinger,
+      required this.showMovingAverage8,
       required this.showMovingAverage14,
+      required this.showMovingAverage30,
       required this.candles,
       required this.bollingerBandsModel}) {
-    candleHelper = CandleHelper(listCandle: candles,listBollinger: bollingerBandsModel);
+    candleHelper = CandleHelper(listCandle: candles, listBollinger: bollingerBandsModel);
   }
 
   @override
@@ -37,7 +45,9 @@ class CandleSticksChartPainter extends CustomPainter {
     _createCandlesLines(canvas, sizeCandles);
     if (showBollinger) _createBollingerLine(canvas, sizeCandles);
     _createBandDashedLine(canvas, sizeChart);
-    if (showMovingAverage14) _createMovingAverage14(canvas, sizeChart);
+    if (showMovingAverage8) _createMovingAverage(canvas, sizeChart, movingAverageModel8, RSIHelper.averageLine8);
+    if (showMovingAverage14) _createMovingAverage(canvas, sizeChart, movingAverageModel14, RSIHelper.averageLine14);
+    if (showMovingAverage30) _createMovingAverage(canvas, sizeChart, movingAverageModel30, RSIHelper.averageLine30);
     _createLineAround(canvas, sizeChart);
     BaseChart.createWordsDynamicChart(
         canvas: canvas,
@@ -134,14 +144,14 @@ class CandleSticksChartPainter extends CustomPainter {
     _drawMovingAverageLine(canvas, size, RSIHelper.externalBollingerLine, lowerLine);
   }
 
-  void _createMovingAverage14(Canvas canvas, Size size) {
+  void _createMovingAverage(Canvas canvas, Size size, List<MovingAverageOfModel> listAverage, Paint paint) {
     List<double> moving = [];
 
-    for (var model in movingAverageModel) {
+    for (var model in listAverage) {
       moving.add(model.value);
     }
 
-    _drawMovingAverageLine(canvas, size, RSIHelper.averageLine14, moving);
+    _drawMovingAverageLine(canvas, size, paint, moving);
   }
 
   void _drawMovingAverageLine(Canvas canvas, Size size, Paint paint, List<double> value) {
