@@ -49,7 +49,7 @@ class _ListAssetPageState extends State<ListAssetPage> {
                           itemCount: state.listAssets.length,
                           separatorBuilder: (_, __) => const Divider(color: Color(0x0f6e6e6e), height: 1, thickness: 2),
                           itemBuilder: (_, index) => CryptoVisorGestureDetector(
-                              onTap: () => _bloc.goToDataAsset(context, state.listAssets[index].name),
+                              onTap: () => _bloc.goToDataAsset(context, state.listAssets[index]),
                               child: IconCoinListWidget(coinModel: state.listAssets[index])))))
             ])));
   }

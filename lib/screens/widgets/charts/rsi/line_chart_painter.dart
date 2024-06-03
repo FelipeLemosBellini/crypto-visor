@@ -57,14 +57,6 @@ class RSIChartPainter extends CustomPainter {
     }
 
     _drawMovingAverageLine(canvas, size, RSIHelper.lineRSI, moving);
-
-    // for (int countLineRSi = 0; countLineRSi < averages.length - 1; countLineRSi++) {
-    //   Offset lineStart = Offset((countLineRSi * size.width / averages.length),
-    //       ((size.height / 100) * (100 - averages[countLineRSi].value)) + BaseChart.marginVertical / 2);
-    //   Offset lineEnd = Offset(((countLineRSi + 1) * size.width / averages.length),
-    //       ((size.height / 100) * (100 - averages[countLineRSi + 1].value)) + BaseChart.marginVertical / 2);
-    //   canvas.drawLine(lineStart, lineEnd, RSIHelper.lineRSI);
-    // }
   }
 
   void _drawMovingAverageLine(Canvas canvas, Size size, Paint paint, List<double> value) {

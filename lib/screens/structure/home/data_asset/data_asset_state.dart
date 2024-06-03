@@ -9,6 +9,7 @@ class DataAssetState {
   List<RelativeStrengthIndexModel> rsi = [];
   List<BollingerBandsModel> bollinger = [];
   List<MovingAverageOfModel> movingAverage14 = [];
+  String quotationValue = "";
 
   List<CandleDataEntity> candles = [];
 
@@ -19,6 +20,7 @@ class DataAssetState {
     List<MovingAverageOfModel>? movingAverage14,
     bool? showBollinger,
     bool? showMovingAverage14,
+    String? quotationValue,
   }) {
     return DataAssetState()
       ..showBollinger = showBollinger ?? this.showBollinger
@@ -26,6 +28,7 @@ class DataAssetState {
       ..rsi = rsi ?? this.rsi
       ..movingAverage14 = movingAverage14 ?? this.movingAverage14
       ..bollinger = bollinger ?? this.bollinger
+      ..quotationValue = quotationValue ?? this.quotationValue
       ..candles = candles ?? this.candles;
   }
 }

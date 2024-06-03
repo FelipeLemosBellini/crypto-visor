@@ -42,6 +42,7 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     response.fold((l) => l, (response) {
       emit(state.copyWith(
           bollinger: response.bollingerBands,
+          quotationValue: response.lastCloseValue.toStringAsFixed(2),
           movingAverage14: response.exponentialMovingAverageOf14days,
           rsi: response.relativeStrengthIndex));
     });

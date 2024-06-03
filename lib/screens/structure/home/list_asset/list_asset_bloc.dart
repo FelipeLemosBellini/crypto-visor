@@ -1,3 +1,4 @@
+import 'package:cryptovisor/core/entity/coin_model.dart';
 import 'package:cryptovisor/core/repositories/data_crypto/data_crypto_repository.dart';
 import 'package:cryptovisor/core/repositories/data_crypto/interfaces/data_crypto_interface.dart';
 import 'package:cryptovisor/routes/route_names.dart';
@@ -14,8 +15,8 @@ class ListAssetBloc extends Cubit<ListAssetState> {
     getListCoin();
   }
 
-  void goToDataAsset(BuildContext context, String nameAsset) async {
-    context.pushNamed(RouteNames.dataAssetPage, pathParameters: {"ticker": nameAsset});
+  void goToDataAsset(BuildContext context, CoinModel coinModel) async {
+    context.pushNamed(RouteNames.dataAssetPage, extra: coinModel);
   }
 
   void getListCoin() async {
