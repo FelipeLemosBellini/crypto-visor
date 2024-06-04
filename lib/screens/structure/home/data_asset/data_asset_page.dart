@@ -84,11 +84,11 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                 CryptoVisorCheckboxWidget(
                     value: state.showBollinger, setValue: _bloc.setValueBollinger, title: "Bandas de Bollinger"),
                 CryptoVisorCheckboxWidget(
-                    value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage8, title: "Média movel 8"),
+                    value: state.showMovingAverage8, setValue: _bloc.setValueMovingAverage8, title: "Média movel 8"),
                 CryptoVisorCheckboxWidget(
                     value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage14, title: "Média movel 14"),
                 CryptoVisorCheckboxWidget(
-                    value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage30, title: "Média movel 30")
+                    value: state.showMovingAverage30, setValue: _bloc.setValueMovingAverage30, title: "Média movel 30")
               ])
             ])));
   }
