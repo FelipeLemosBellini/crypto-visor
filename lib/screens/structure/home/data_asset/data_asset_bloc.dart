@@ -14,40 +14,12 @@ import 'package:get_it/get_it.dart';
 class DataAssetBloc extends Cubit<DataAssetState> {
   final IDataCryptoRepository dataCryptoRepository;
 
-  DataAssetBloc({required this.dataCryptoRepository}) : super(DataAssetState()) {
-    // _initPage();
-  }
+  DataAssetBloc({required this.dataCryptoRepository}) : super(DataAssetState());
 
-  void _initPage() async {
-    _createCandles();
-    _createRSI();
-    _createBollinger();
-    _createMovingAverage();
-  }
-
-  void getDataCoin(String nameAsset) async {
-    _getCandles(nameAsset);
-    _getStatistics(nameAsset);
-  }
-
-  void _getCandles(String nameAsset) async {
-    var response = await dataCryptoRepository.getCandles(assetName: nameAsset);
-    response.fold((l) => l, (response) {
-      emit(state.copyWith(candles: response.reversed.toList()));
-    });
-  }
-
-  void _getStatistics(String nameAsset) async {
-    var response = await dataCryptoRepository.getDataAndCharts(assetName: nameAsset);
-    response.fold((l) => l, (response) {
-      emit(state.copyWith(
-          bollinger: response.bollingerBands,
-          quotationValue: response.lastCloseValue.toStringAsFixed(2),
-          movingAverage8: response.exponentialMovingAverageOf8days,
-          movingAverage14: response.exponentialMovingAverageOf14days,
-          movingAverage30: response.exponentialMovingAverageOf30days,
-          rsi: response.relativeStrengthIndex));
-    });
+  void setNewTimer(int? newValue) {
+    if (newValue != null) {
+      emit(state.copyWith(selectedValue: newValue, amountCandles: newValue * 6));
+    }
   }
 
   void setValueBollinger(bool? value) {
@@ -66,68 +38,17 @@ class DataAssetBloc extends Cubit<DataAssetState> {
     emit(state.copyWith(showMovingAverage30: value!));
   }
 
-  void _createCandles() {
-    List<CandleDataEntity> candleData = [];
-
-    for (int i = 0; i < 20; i++) {
-      DateTime timestamp = DateTime(2024, 1, 1 + i);
-      double open = Random().nextDouble() * (1000 - 0) + 0;
-      double high = open + Random().nextDouble() * (1000 - open);
-      double low = open - Random().nextDouble() * (open - 0);
-      double close = low + Random().nextDouble() * (high - low);
-
-      candleData.add(CandleDataEntity(
-        timestamp: timestamp,
-        open: double.parse(open.toStringAsFixed(2)),
-        high: double.parse(high.toStringAsFixed(2)),
-        low: double.parse(low.toStringAsFixed(2)),
-        close: double.parse(close.toStringAsFixed(2)),
-      ));
+  List<T> subListaFinalGenerica<T>(List<T> listaCompleta, int quantidade) {
+    if (listaCompleta.isEmpty) return [];
+    if (quantidade > listaCompleta.length) {
+      // throw Exception('Quantidade excede o tamanho da lista.');
     }
-    emit(state.copyWith(candles: candleData));
-  }
 
-  void _createBollinger() {
-    List<BollingerBandsModel> bollingerData = [];
-
-    for (int i = 0; i < 15; i++) {
-      DateTime timestamp = DateTime(2024, 1, 1 + i);
-      double open = Random().nextDouble() * (1000 - 0) + 0;
-      double high = open + Random().nextDouble() * (1000 - open);
-      double low = open - Random().nextDouble() * (open - 0);
-      double close = low + Random().nextDouble() * (high - low);
-
-      bollingerData.add(BollingerBandsModel(
-        date: timestamp,
-        higherLine: double.parse(high.toStringAsFixed(2)),
-        baseLine: double.parse(close.toStringAsFixed(2)),
-        lowerLine: double.parse(low.toStringAsFixed(2)),
-      ));
+    int startIndex = listaCompleta.length - quantidade;
+    if (startIndex < 0) {
+      startIndex = 0;
     }
-    emit(state.copyWith(bollinger: bollingerData));
-  }
 
-  void _createRSI() {
-    List<RelativeStrengthIndexModel> rsiData = [];
-
-    for (int i = 0; i < 15; i++) {
-      DateTime timestamp = DateTime(2024, 1, 1 + i);
-      double open = Random().nextDouble() * (100 - 0) + 0;
-
-      rsiData.add(RelativeStrengthIndexModel(date: timestamp, value: double.parse(open.toStringAsFixed(2))));
-    }
-    emit(state.copyWith(rsi: rsiData));
-  }
-
-  void _createMovingAverage() {
-    List<MovingAverageOfModel> listAverage = [];
-
-    for (int i = 0; i < 15; i++) {
-      DateTime timestamp = DateTime(2024, 1, 1 + i);
-      double open = Random().nextDouble() * (1000 - 0) + 0;
-
-      listAverage.add(MovingAverageOfModel(date: timestamp, value: double.parse(open.toStringAsFixed(2))));
-    }
-    emit(state.copyWith(movingAverage14: listAverage));
+    return listaCompleta.skip(startIndex).take(quantidade).toList();
   }
 }

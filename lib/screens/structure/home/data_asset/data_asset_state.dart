@@ -8,39 +8,25 @@ class DataAssetState {
   bool showMovingAverage8 = false;
   bool showMovingAverage14 = false;
   bool showMovingAverage30 = false;
-  List<RelativeStrengthIndexModel> rsi = [];
-  List<BollingerBandsModel> bollinger = [];
-  List<MovingAverageOfModel> movingAverage8 = [];
-  List<MovingAverageOfModel> movingAverage14 = [];
-  List<MovingAverageOfModel> movingAverage30 = [];
-  String quotationValue = "";
 
-  List<CandleDataEntity> candles = [];
+  List<int> timers = [7, 30, 60];
+  int selectedValue = 30;
+  int amountCandles = 180;
 
   DataAssetState copyWith({
-    List<RelativeStrengthIndexModel>? rsi,
-    List<BollingerBandsModel>? bollinger,
-    List<CandleDataEntity>? candles,
-    List<MovingAverageOfModel>? movingAverage8,
-    List<MovingAverageOfModel>? movingAverage14,
-    List<MovingAverageOfModel>? movingAverage30,
     bool? showBollinger,
     bool? showMovingAverage8,
     bool? showMovingAverage14,
     bool? showMovingAverage30,
-    String? quotationValue,
+    int? selectedValue,
+    int? amountCandles,
   }) {
     return DataAssetState()
+      ..amountCandles = amountCandles ?? this.amountCandles
+      ..selectedValue = selectedValue ?? this.selectedValue
       ..showBollinger = showBollinger ?? this.showBollinger
       ..showMovingAverage8 = showMovingAverage8 ?? this.showMovingAverage8
       ..showMovingAverage14 = showMovingAverage14 ?? this.showMovingAverage14
-      ..showMovingAverage30 = showMovingAverage30 ?? this.showMovingAverage30
-      ..rsi = rsi ?? this.rsi
-      ..movingAverage8 = movingAverage8 ?? this.movingAverage8
-      ..movingAverage14 = movingAverage14 ?? this.movingAverage14
-      ..movingAverage30 = movingAverage30 ?? this.movingAverage30
-      ..bollinger = bollinger ?? this.bollinger
-      ..quotationValue = quotationValue ?? this.quotationValue
-      ..candles = candles ?? this.candles;
+      ..showMovingAverage30 = showMovingAverage30 ?? this.showMovingAverage30;
   }
 }

@@ -1,4 +1,6 @@
 import 'package:cryptovisor/core/entity/coin_model.dart';
+import 'package:cryptovisor/core/entity/crypto_data/candle_data_entity.dart';
+import 'package:cryptovisor/core/entity/response/response_data_crypto_and_bar_chart_model.dart';
 import 'package:cryptovisor/screens/helper/crypto_visor_colors.dart';
 import 'package:cryptovisor/screens/helper/export_helper_screen.dart';
 import 'package:cryptovisor/screens/structure/home/data_asset/data_asset_bloc.dart';
@@ -15,8 +17,15 @@ import 'package:go_router/go_router.dart';
 
 class DataAssetPage extends StatefulWidget {
   final CoinModel coinModel;
+  final ResponseDataCryptoAndBarChartModel dataCryptoAndBarChartModel;
+  final List<CandleDataEntity> listCandles;
 
-  const DataAssetPage({super.key, required this.coinModel});
+  const DataAssetPage({
+    super.key,
+    required this.coinModel,
+    required this.dataCryptoAndBarChartModel,
+    required this.listCandles,
+  });
 
   @override
   State<DataAssetPage> createState() => _DataAssetPageState();
@@ -28,7 +37,6 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _bloc.getDataCoin(widget.coinModel.name);
   }
 
   @override
@@ -38,38 +46,57 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
         builder: (_, state) => Scaffold(
             backgroundColor: CryptoVisorColors.scaffoldColor,
             appBar: CryptoVisorAppBar(coinModel: widget.coinModel, onTap: () => context.pop()),
-            body: ListView(padding: EdgeInsets.only(top: 16), children: [
+            body: ListView(padding: const EdgeInsets.only(top: 16), children: [
               Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Row(children: [
-                    Text("Cotação atual: ").bodyBaseMedium(style: TextStyle(color: Colors.white70)),
-                    Text(state.quotationValue + " USD").bodyBaseMedium()
+                    const Text("Cotação atual: ").bodyBaseMedium(style: const TextStyle(color: Colors.white70)),
+                    Text("${widget.dataCryptoAndBarChartModel.lastCloseValue} USD").bodyBaseMedium()
                   ])),
+              Container(alignment: Alignment.center,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      color: CryptoVisorColors.secondaryColor, borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  child: DropdownButton<int>(padding: EdgeInsets.only(left: 10),
+                      value: state.selectedValue,
+                      isExpanded: true,
+                      elevation: 5,
+                      enableFeedback: true,
+                      iconEnabledColor: Colors.white70,
+                      style: Text("").bodyBaseMedium().style,
+                      dropdownColor: CryptoVisorColors.secondaryColor,
+                      underline: const SizedBox.shrink(),
+                      items: state.timers.map((int value) {
+                        return DropdownMenuItem<int>(
+                            value: value, child: Text(value.toString()) // Convert int to String for display
+                            );
+                      }).toList(),
+                      onChanged: _bloc.setNewTimer)),
               Padding(
                   padding: const EdgeInsets.only(top: 10, left: 8, right: 4),
                   child: Visibility(
-                      visible: state.candles.isNotEmpty,
-                      child: TweenAnimationBuilder(
-                          tween: Tween<double>(begin: 0, end: 100),
-                          duration: const Duration(seconds: 10),
-                          builder: (BuildContext context, double percentage, Widget? widget) {
-                            return SizedBox(
-                                height: MediaQuery.sizeOf(context).width * 0.6,
-                                width: MediaQuery.sizeOf(context).width,
-                                child: CustomPaint(
-                                    painter: CandleSticksChartPainter(
-                                        movingAverageModel8: state.movingAverage8,
-                                        movingAverageModel14: state.movingAverage14,
-                                        movingAverageModel30: state.movingAverage30,
-                                        showBollinger: state.showBollinger,
-                                        showMovingAverage8: state.showMovingAverage8,
-                                        showMovingAverage14: state.showMovingAverage14,
-                                        showMovingAverage30: state.showMovingAverage30,
-                                        candles: state.candles,
-                                        bollingerBandsModel: state.bollinger)));
-                          }))),
+                      visible: widget.listCandles.isNotEmpty,
+                      child: SizedBox(
+                          height: MediaQuery.sizeOf(context).width * 0.6,
+                          width: MediaQuery.sizeOf(context).width,
+                          child: CustomPaint(
+                              painter: CandleSticksChartPainter(
+                                  movingAverageModel8: _bloc.subListaFinalGenerica(
+                                      widget.dataCryptoAndBarChartModel.exponentialMovingAverageOf8days, state.amountCandles),
+                                  movingAverageModel14: _bloc.subListaFinalGenerica(
+                                      widget.dataCryptoAndBarChartModel.exponentialMovingAverageOf14days, state.amountCandles),
+                                  movingAverageModel30: _bloc.subListaFinalGenerica(
+                                      widget.dataCryptoAndBarChartModel.exponentialMovingAverageOf30days, state.amountCandles),
+                                  candles: _bloc.subListaFinalGenerica(widget.listCandles, state.amountCandles),
+                                  bollingerBandsModel:
+                                      _bloc.subListaFinalGenerica(widget.dataCryptoAndBarChartModel.bollingerBands, state.amountCandles),
+                                  showBollinger: state.showBollinger,
+                                  showMovingAverage8: state.showMovingAverage8,
+                                  showMovingAverage14: state.showMovingAverage14,
+                                  showMovingAverage30: state.showMovingAverage30))))),
               Visibility(
-                  visible: state.candles.isNotEmpty && state.rsi.isNotEmpty,
+                  visible: widget.listCandles.isNotEmpty &&
+                      widget.dataCryptoAndBarChartModel.relativeStrengthIndex.isNotEmpty,
                   child: Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 40, left: 8, right: 4),
                       child: SizedBox(
@@ -77,19 +104,28 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                           width: MediaQuery.sizeOf(context).width,
                           child: CustomPaint(
                               painter: RSIChartPainter(
-                            candles: state.candles,
-                            averages: state.rsi,
+                            candles: _bloc.subListaFinalGenerica(widget.listCandles, state.amountCandles),
+                            averages: _bloc.subListaFinalGenerica(
+                                widget.dataCryptoAndBarChartModel.relativeStrengthIndex, state.amountCandles),
                           ))))),
-              Column(children: [
-                CryptoVisorCheckboxWidget(
-                    value: state.showBollinger, setValue: _bloc.setValueBollinger, title: "Bandas de Bollinger"),
-                CryptoVisorCheckboxWidget(
-                    value: state.showMovingAverage8, setValue: _bloc.setValueMovingAverage8, title: "Média movel 8"),
-                CryptoVisorCheckboxWidget(
-                    value: state.showMovingAverage14, setValue: _bloc.setValueMovingAverage14, title: "Média movel 14"),
-                CryptoVisorCheckboxWidget(
-                    value: state.showMovingAverage30, setValue: _bloc.setValueMovingAverage30, title: "Média movel 30")
-              ])
+              Visibility(
+                  visible: widget.listCandles.isNotEmpty,
+                  child: Column(children: [
+                    CryptoVisorCheckboxWidget(
+                        value: state.showBollinger, setValue: _bloc.setValueBollinger, title: "Bandas de Bollinger"),
+                    CryptoVisorCheckboxWidget(
+                        value: state.showMovingAverage8,
+                        setValue: _bloc.setValueMovingAverage8,
+                        title: "Média movel 8"),
+                    CryptoVisorCheckboxWidget(
+                        value: state.showMovingAverage14,
+                        setValue: _bloc.setValueMovingAverage14,
+                        title: "Média movel 14"),
+                    CryptoVisorCheckboxWidget(
+                        value: state.showMovingAverage30,
+                        setValue: _bloc.setValueMovingAverage30,
+                        title: "Média movel 30")
+                  ]))
             ])));
   }
 }
