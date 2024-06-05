@@ -40,15 +40,11 @@ class DataAssetBloc extends Cubit<DataAssetState> {
 
   List<T> subListaFinalGenerica<T>(List<T> listaCompleta, int quantidade) {
     if (listaCompleta.isEmpty) return [];
+
     if (quantidade > listaCompleta.length) {
-      // throw Exception('Quantidade excede o tamanho da lista.');
+      return listaCompleta.sublist(0, listaCompleta.length);
     }
 
-    int startIndex = listaCompleta.length - quantidade;
-    if (startIndex < 0) {
-      startIndex = 0;
-    }
-
-    return listaCompleta.skip(startIndex).take(quantidade).toList();
+    return listaCompleta.sublist(0, quantidade);
   }
 }
