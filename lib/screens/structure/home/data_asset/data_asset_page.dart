@@ -53,29 +53,33 @@ class _DataAssetPageState extends State<DataAssetPage> with TickerProviderStateM
                     const Text("Cotação atual: ").bodyBaseMedium(style: const TextStyle(color: Colors.white70)),
                     Text("${widget.dataCryptoAndBarChartModel.lastCloseValue} USD").bodyBaseMedium()
                   ])),
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                      margin: const EdgeInsets.only(left: 16, top: 8),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8)), color: CryptoVisorColors.secondaryColor),
-                      width: 80,
-                      child: ButtonTheme(
-                          alignedDropdown: true,
-                          buttonColor: Colors.white,
-                          child: DropdownButton<int>(
-                              alignment: Alignment.center,
-                              value: state.selectedValue,
-                              elevation: 5,
-                              enableFeedback: true,
-                              iconEnabledColor: Colors.white,
-                              style: const Text("").bodyBaseMedium().style,
-                              dropdownColor: CryptoVisorColors.secondaryColor,
-                              underline: const SizedBox.shrink(),
-                              items: state.timers.map<DropdownMenuItem<int>>((int value) {
-                                return DropdownMenuItem<int>(value: value, child: Text(value.toString()));
-                              }).toList(),
-                              onChanged: _bloc.setNewTimer)))),
+              Row(crossAxisAlignment: CrossAxisAlignment.center,children: [
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                        margin: const EdgeInsets.only(left: 16, top: 8,right: 8),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: CryptoVisorColors.secondaryColor),
+                        width: 80,
+                        child: ButtonTheme(
+                            alignedDropdown: true,
+                            buttonColor: Colors.white,
+                            child: DropdownButton<int>(
+                                alignment: Alignment.center,
+                                value: state.selectedValue,
+                                elevation: 5,
+                                enableFeedback: true,
+                                iconEnabledColor: Colors.white,
+                                style: const Text("").bodyBaseMedium().style,
+                                dropdownColor: CryptoVisorColors.secondaryColor,
+                                underline: const SizedBox.shrink(),
+                                items: state.timers.map<DropdownMenuItem<int>>((int value) {
+                                  return DropdownMenuItem<int>(value: value, child: Text(value.toString()));
+                                }).toList(),
+                                onChanged: _bloc.setNewTimer)))),
+                Text("Dias").bodyMediumRegular()
+              ]),
               Padding(
                   padding: const EdgeInsets.only(top: 10, left: 8, right: 4),
                   child: Visibility(

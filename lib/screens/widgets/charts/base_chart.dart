@@ -27,7 +27,7 @@ abstract class BaseChart {
         text: TextSpan(
             text: numbers[i].toStringAsFixed(2).toString(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: fontColor)),
-      )..layout(maxWidth: 40, minWidth: 0);
+      )..layout(maxWidth: 60, minWidth: 0);
 
       textPainter.paint(
           canvas, Offset(size.width, ((size.height * ((i) / (numbers.length - 1))) - (marginVertical / 4))));

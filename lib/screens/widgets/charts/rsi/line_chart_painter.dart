@@ -19,7 +19,7 @@ class RSIChartPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (candles.isNotEmpty && averages.isNotEmpty) {
-      Size sizeChart = Size(size.width * 0.85, size.height + (BaseChart.marginVertical) / 2);
+      Size sizeChart = Size(size.width * 0.8, size.height + (BaseChart.marginVertical) / 2);
 
       _createBackground(canvas, sizeChart);
       _createRSILine(canvas, sizeChart);
@@ -33,7 +33,7 @@ class RSIChartPainter extends CustomPainter {
       BaseChart.createWords(
           canvas: canvas,
           size: Size(sizeChart.width + (sizeChart.width * 0.05), sizeChart.height),
-          numbers: [averages.last.value],
+          numbers: [averages.first.value],
           fontColor: Colors.white);
     }
   }
@@ -55,6 +55,8 @@ class RSIChartPainter extends CustomPainter {
     for (var model in averages) {
       moving.add(model.value);
     }
+
+    moving = moving.reversed.toList();
 
     _drawMovingAverageLine(canvas, size, RSIHelper.lineRSI, moving);
   }

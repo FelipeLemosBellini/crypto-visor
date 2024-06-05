@@ -37,7 +37,7 @@ class CandleSticksChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Size sizeChart = Size(size.width * 0.85, size.height);
+    Size sizeChart = Size(size.width * 0.8, size.height);
     Size sizeCandles = Size(sizeChart.width, sizeChart.height);
 
     _createBackground(canvas, sizeChart);
@@ -51,7 +51,7 @@ class CandleSticksChartPainter extends CustomPainter {
     _createLineAround(canvas, sizeChart);
     BaseChart.createWordsDynamicChart(
         canvas: canvas,
-        size: Size(sizeChart.width + (sizeChart.width * 0.05), sizeChart.height),
+        size: Size(sizeChart.width + (sizeChart.width * 0.1), sizeChart.height),
         numbers: candleHelper.getNumbersForParameterChart,
         fontColor: CryptoVisorColors.whiteLabel.withOpacity(0.5));
   }
