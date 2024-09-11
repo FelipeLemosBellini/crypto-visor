@@ -52,10 +52,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias localProperties['keyAlias']
-            keyPassword localProperties['keyPassword']
-            storeFile file(localProperties['storeFile'])
-            storePassword localProperties['storePassword']
+            storeFile file("key-app.keystore")
+            keyAlias System.getenv("RELEASE_KEYSTORE_ALIAS")
+            keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+            storePassword System.getenv("RELEASE_KEYSTORE_PASSWORD")
         }
     }
 
